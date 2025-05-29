@@ -295,7 +295,7 @@
         <div id="sidebar">
             <ul>
                 <li><a href="#" onclick="mostrarInicio()">Inicio</a></li>
-                <li><a href="#">Mis Proyectos</a></li>
+                <li><a href="#" onclick="mostrarMisProyectos()">Mis Proyectos</a></li>
                 <li><a href="#" onclick="logout()">Cerrar Sesión</a></li>
             </ul>
         </div>
@@ -303,7 +303,13 @@
         <div id="main-content">
             <h2 id="saludo-usuario"></h2>
             <div class="contenido-principal">
-                <!-- Aquí irán otras secciones -->
+                <div id="mis-proyectos">
+                    <h3>Buscar Proyecto por Código SIGEVA</h3>
+                    <input type="text" id="codigo-proyecto" placeholder="Ingresá el código Sigeva" style="padding: 10px; width: 300px; font-size: 14px;" />
+                    <button onclick="buscarProyecto()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">Buscar</button>
+
+                    <div id="resultado-proyecto" style="margin-top: 20px;"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -533,8 +539,8 @@
     <script>
         function mostrarInicio() {
             document.querySelector(".contenido-principal").innerHTML = `
-                <h2 id="saludo-usuario"></h2>
-            `;
+                        <h2 id="saludo-usuario"></h2>
+                    `;
 
             // Mostrar saludo nuevamente (si querés volverlo a cargar)
             const user = firebase.auth().currentUser;
@@ -545,6 +551,56 @@
                         document.getElementById("saludo-usuario").textContent = `Hola ${data.nombre} ${data.apellido}`;
                     }
                 });
+            }
+        }
+        function mostrarMisProyectos() {
+            document.querySelector(".contenido-principal").innerHTML = `
+                <h3>Buscar Proyecto por Código SIGEVA</h3>
+                <input type="text" id="codigo-proyecto" placeholder="Ingresá el código Sigeva" style="padding: 10px; width: 300px; font-size: 14px;" />
+                <button onclick="buscarProyecto()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">Buscar</button>
+                <div id="resultado-proyecto" style="margin-top: 20px;"></div>
+            `;
+        }
+    </script>
+    <script>
+        async function buscarProyecto() {
+            const codigo = document.getElementById("codigo-proyecto").value.trim().toUpperCase();
+            const resultado = document.getElementById("resultado-proyecto");
+
+            if (!codigo) {
+                resultado.innerHTML = "<p style='color: red;'>Por favor ingresá un código.</p>";
+                return;
+            }
+
+            try {
+                const querySnapshot = await firebase.firestore()
+                    .collection("proyectos")
+                    .where("sigeva", "==", codigo)
+                    .get();
+
+                if (querySnapshot.empty) {
+                    resultado.innerHTML = `<p style="color: red;">No se encontró ningún proyecto con ese código.</p>`;
+                    return;
+                }
+
+                // Si hay resultados
+                const doc = querySnapshot.docs[0];
+                const data = doc.data();
+
+                resultado.innerHTML = `
+                    <table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+                        <tr><th>Código SIGEVA</th><td>${data.sigeva || "-"}</td></tr>
+                        <tr><th>Título</th><td>${data.titulo || "-"}</td></tr>
+                        <tr><th>Presupuesto</th><td>${isNaN(data.presupuesto) ? "-" : data.presupuesto}</td></tr>
+                        <tr><th>CUIT</th><td>${data.cuit || "-"}</td></tr>
+                        <tr><th>Convocatoria</th><td>${data.convocatoria || "-"}</td></tr>
+                        <tr><th>Resolución</th><td>${data.resolucion || "-"}</td></tr>
+                    </table>
+                `;
+
+            } catch (error) {
+                console.error("Error al buscar proyecto:", error);
+                resultado.innerHTML = `<p style="color: red;">Error al buscar proyecto.</p>`;
             }
         }
     </script>
