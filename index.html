@@ -149,6 +149,7 @@
             left: 10px;
             font-size: 24px;
             cursor: pointer;
+            transition: left 0.3s ease;
             z-index: 1002;
             display: none;
         }
@@ -159,7 +160,7 @@
             left: -160px;
             width: 160px;
             height: calc(100% - 72px);
-            background-color: #004080;
+            background-color: rgba(0, 64, 128, 0.95); /* azul con transparencia */
             color: white;
             padding-top: 20px;
             transition: left 0.3s ease;
@@ -490,12 +491,21 @@
             const authContainer = document.getElementById("auth-container");
             const mainInterface = document.getElementById("main-interface");
             const saludo = document.getElementById("saludo-usuario");
+            const menuToggle = document.getElementById("menu-toggle");
+            const sidebar = document.getElementById("sidebar");
 
             if (user && user.emailVerified) {
-                // Ocultar login y mostrar interfaz
+                // Ocultar formulario de login
                 authContainer.style.display = "none";
+
+                // Mostrar interfaz principal
                 mainInterface.style.display = "block";
 
+                // Mostrar barra lateral y botón hamburguesa
+                if (menuToggle) menuToggle.style.display = "block";
+                if (sidebar) sidebar.style.display = "block";
+
+                // Mostrar saludo personalizado
                 const doc = await firebase.firestore().collection("usuarios").doc(user.uid).get();
                 if (doc.exists) {
                     const data = doc.data();
@@ -505,9 +515,13 @@
                 }
 
             } else {
-                // Mostrar login
+                // Mostrar login y ocultar interfaz
                 authContainer.style.display = "block";
                 mainInterface.style.display = "none";
+
+                // Asegurarse de ocultar barra y botón en caso de estar visibles
+                if (menuToggle) menuToggle.style.display = "none";
+                if (sidebar) sidebar.style.display = "none";
             }
         });
     </script>
