@@ -277,7 +277,7 @@
 
                 if (!user.emailVerified) {
                     alert("Tu correo no está verificado. Revisá tu bandeja de entrada.");
-                    await user.sendEmailVerification(); // (re)envía si quiere
+                    await user.sendEmailVerification();
                     return;
                 }
 
@@ -288,8 +288,22 @@
                 } else {
                     alert("No se encontraron los datos del usuario.");
                 }
+
             } catch (error) {
-                alert("Error al iniciar sesión: " + error.message);
+                let mensaje;
+                switch (error.code) {
+                    case "auth/invalid-email":
+                    case "auth/user-not-found":
+                    case "auth/wrong-password":
+                        mensaje = "Correo electrónico y/o contraseña incorrectos.";
+                        break;
+                    case "auth/too-many-requests":
+                        mensaje = "Demasiados intentos fallidos. Intentá nuevamente más tarde.";
+                        break;
+                    default:
+                        mensaje = "Error al iniciar sesión: " + error.message;
+                }
+                alert(mensaje);
             }
         }
 
