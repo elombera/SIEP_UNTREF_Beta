@@ -234,22 +234,7 @@
         </div>
     </header>
 
-    <div id="menu-toggle" onclick="toggleSidebar()">☰</div>
-
-    <!-- Barra lateral -->
-    <div id="sidebar">
-        <ul>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Mis Proyectos</a></li>
-            <li><a href="#">Cerrar Sesión</a></li>
-        </ul>
-    </div>
-    <div id="main-content">
-        <!-- Aca va el saludo y luego el contenido del sistema -->
-        <h2 id="saludo"></h2>
-    </div>
-
-    <div class="container">
+    <div id="auth-container" class="container">
         <!-- FORMULARIO LOGIN -->
         <div id="form-login" class="formulario activo">
             <h3>Iniciar sesión</h3>
@@ -303,6 +288,24 @@
         </div>
     </div>
 
+    <div id="main-interface" style="display: none;">
+        <div id="menu-toggle" onclick="toggleSidebar()">☰</div>
+
+        <div id="sidebar">
+            <ul>
+                <li><a href="#" onclick="mostrarInicio()">Inicio</a></li>
+                <li><a href="#">Mis Proyectos</a></li>
+                <li><a href="#" onclick="logout()">Cerrar Sesión</a></li>
+            </ul>
+        </div>
+
+        <div id="main-content">
+            <h2 id="saludo-usuario"></h2>
+            <div class="contenido-principal">
+                <!-- Aquí irán otras secciones -->
+            </div>
+        </div>
+    </div>
     <footer>
         Secretaría de Investigación y Desarrollo - UNTREF<br>
         Los Aromos 6231, Palomar, Buenos Aires, Argentina<br>
@@ -483,8 +486,59 @@
         }
     </script>
     <script>
+        firebase.auth().onAuthStateChanged(async user => {
+            const authContainer = document.getElementById("auth-container");
+            const mainInterface = document.getElementById("main-interface");
+            const saludo = document.getElementById("saludo-usuario");
+
+            if (user && user.emailVerified) {
+                // Ocultar login y mostrar interfaz
+                authContainer.style.display = "none";
+                mainInterface.style.display = "block";
+
+                const doc = await firebase.firestore().collection("usuarios").doc(user.uid).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    saludo.textContent = `Hola ${data.nombre} ${data.apellido}`;
+                } else {
+                    saludo.textContent = "Hola usuario";
+                }
+
+            } else {
+                // Mostrar login
+                authContainer.style.display = "block";
+                mainInterface.style.display = "none";
+            }
+        });
+    </script>
+    <script>
         function toggleSidebar() {
             document.body.classList.toggle("sidebar-open");
+        }
+    </script>
+    <script>
+        function mostrarInicio() {
+            document.querySelector(".contenido-principal").innerHTML = `
+                <h2 id="saludo-usuario"></h2>
+            `;
+
+            // Mostrar saludo nuevamente (si querés volverlo a cargar)
+            const user = firebase.auth().currentUser;
+            if (user) {
+                firebase.firestore().collection("usuarios").doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        document.getElementById("saludo-usuario").textContent = `Hola ${data.nombre} ${data.apellido}`;
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                location.reload(); // opcional, o simplemente ocultás interfaz y mostrás login
+            });
         }
     </script>
 </body>
