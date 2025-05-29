@@ -357,7 +357,16 @@
                 const doc = await firebase.firestore().collection("usuarios").doc(user.uid).get();
                 if (doc.exists) {
                     const data = doc.data();
-                    alert(`Hola ${data.nombre} ${data.apellido}`);
+
+                    // Mostrar saludo directamente en el contenido
+                    document.getElementById("saludo").textContent = `Hola ${data.nombre} ${data.apellido}`;
+                    document.getElementById("main-content").style.display = "block";
+
+                    // Mostrar botón hamburguesa
+                    document.getElementById("menu-toggle").style.display = "block";
+
+                    // Ocultar formularios
+                    document.querySelectorAll('.formulario').forEach(f => f.style.display = 'none');
                 } else {
                     alert("No se encontraron los datos del usuario.");
                 }
@@ -375,7 +384,7 @@
                         mensaje = "Demasiados intentos fallidos. Esperá un momento antes de intentar nuevamente.";
                         break;
                     default:
-                        console.error("Error desconocido:", error); // para que lo puedas ver en consola
+                        console.error("Error desconocido:", error);
                         mensaje = "Ocurrió un error inesperado al iniciar sesión.";
                 }
                 alert(mensaje);
