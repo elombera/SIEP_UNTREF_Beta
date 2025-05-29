@@ -11,8 +11,9 @@
             margin: 0;
             padding: 0;
             background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
-            transition: margin-left 0.3s ease;
         }
 
         header {
@@ -21,10 +22,7 @@
             padding: 10px 20px;
             background-color: #ffffff;
             border-bottom: 2px solid #000000;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            position: relative;
             z-index: 1001;
             transition: margin-left 0.3s ease;
         }
@@ -51,9 +49,19 @@
                 color: #333;
                 margin-left: 10px;
             }
-
         .container {
-            display: none;
+            width: 500px;
+            height: 500px; 
+            background: white;
+            padding: 30px 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            margin: auto;
         }
 
         .formulario {
@@ -64,44 +72,109 @@
                 display: block;
             }
 
-        #menu-toggle {
-            position: fixed;
-            top: 80px;
-            left: 10px;
-            z-index: 1002;
-            font-size: 24px;
-            background-color: transparent;
+        h3 {
+            margin-bottom: 20px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+            .input-wrapper input {
+                width: 100%;
+                padding: 10px;
+                box-sizing: border-box;
+                font-size: 14px;
+            }
+
+                /* SOLO si hay toggle-password */
+                .input-wrapper input + .toggle-password {
+                    margin-left: -40px; 
+                }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #444;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            display: inline-block;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        input[type="email"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 0px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #004080;
+            color: white;
             border: none;
             cursor: pointer;
-            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 0px;
+        
+        }
+
+            button:hover {
+                background-color: #003060;
+            }
+
+        .link {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            color: #004080;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        #menu-toggle {
+            position: absolute;
+            top: 75px; /* justo debajo del header */
+            left: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1002;
+            display: none;
         }
 
         #sidebar {
             position: fixed;
-            top: 80px;
-            left: 0;
+            top: 72px; /* debajo del header */
+            left: -160px;
             width: 160px;
-            height: calc(100% - 80px);
-            background-color: rgba(0, 51, 102, 0.95);
+            height: calc(100% - 72px);
+            background-color: #004080;
             color: white;
             padding-top: 20px;
-            box-sizing: border-box;
-            transition: transform 0.3s ease;
-            transform: translateX(-160px);
+            transition: left 0.3s ease;
             z-index: 1000;
         }
 
-            #sidebar.mostrar {
-                transform: translateX(0);
-            }
-
             #sidebar ul {
-                list-style-type: none;
+                list-style: none;
                 padding: 0;
+                margin: 0;
             }
 
                 #sidebar ul li {
-                    padding: 10px 20px;
+                    padding: 12px 20px;
+                    border-bottom: 1px solid #003060;
                 }
 
                     #sidebar ul li a {
@@ -110,30 +183,30 @@
                         display: block;
                     }
 
-                    #sidebar ul li:hover {
-                        background-color: rgba(255, 255, 255, 0.1);
-                    }
-
         #main-content {
-            margin-top: 100px;
-            padding: 20px;
-            margin-left: 0;
             transition: margin-left 0.3s ease;
+            padding: 20px;
+            flex: 1;
         }
 
-        body.shifted #main-content,
-        body.shifted header {
+        body.sidebar-open #sidebar {
+            left: 0;
+        }
+
+        body.sidebar-open #main-content,
+        body.sidebar-open header {
             margin-left: 160px;
         }
 
+        body.sidebar-open #menu-toggle {
+            left: 170px;
+        }
         footer {
             background-color: #002855;
             color: white;
             text-align: center;
             padding: 20px;
             font-size: 14px;
-            position: relative;
-            z-index: 1;
         }
 
         .footer-redes {
@@ -411,22 +484,7 @@
     </script>
     <script>
         function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const body = document.body;
-            sidebar.classList.toggle("mostrar");
-            body.classList.toggle("shifted");
-        }
-
-        function cerrarSesion() {
-            firebase.auth().signOut().then(() => {
-                location.reload();
-            }).catch(error => {
-                alert("Error al cerrar sesión: " + error.message);
-            });
-        }
-
-        function irAInicio() {
-            document.getElementById("main-content").innerHTML = '<h2 id="saludo">Inicio</h2>';
+            document.body.classList.toggle("sidebar-open");
         }
     </script>
 </body>
