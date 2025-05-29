@@ -299,10 +299,11 @@
                         mensaje = "Correo electrónico y/o contraseña incorrectos.";
                         break;
                     case "auth/too-many-requests":
-                        mensaje = "Demasiados intentos fallidos. Intentá nuevamente más tarde.";
+                        mensaje = "Demasiados intentos fallidos. Esperá un momento antes de intentar nuevamente.";
                         break;
                     default:
-                        mensaje = "Error al iniciar sesión: " + error.message;
+                        console.error("Error desconocido:", error); // para que lo puedas ver en consola
+                        mensaje = "Ocurrió un error inesperado al iniciar sesión.";
                 }
                 alert(mensaje);
             }
