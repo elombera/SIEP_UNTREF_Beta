@@ -361,15 +361,15 @@
                 if (doc.exists) {
                     const data = doc.data();
 
-                    // Mostrar saludo directamente en el contenido
-                    document.getElementById("saludo").textContent = `Hola ${data.nombre} ${data.apellido}`;
-                    document.getElementById("main-content").style.display = "block";
+                    // Mostrar saludo directamente
+                    document.getElementById("saludo-usuario").textContent = `Hola ${data.nombre} ${data.apellido}`;
 
-                    // Mostrar botón hamburguesa
+                    // Mostrar interfaz principal
+                    document.getElementById("auth-container").style.display = "none";
+                    document.getElementById("main-interface").style.display = "block";
+
+                    // Mostrar botón hamburguesa (ya está en main-interface)
                     document.getElementById("menu-toggle").style.display = "block";
-
-                    // Ocultar formularios
-                    document.querySelectorAll('.formulario').forEach(f => f.style.display = 'none');
                 } else {
                     alert("No se encontraron los datos del usuario.");
                 }
