@@ -594,17 +594,13 @@
             const sidebar = document.getElementById("sidebar");
 
             if (user && user.emailVerified) {
-                // Ocultar formulario de login
+                // Mostrar interfaz
                 authContainer.style.display = "none";
-
-                // Mostrar interfaz principal
                 mainInterface.style.display = "block";
-
-                // Mostrar barra lateral y botón hamburguesa
                 if (menuToggle) menuToggle.style.display = "block";
                 if (sidebar) sidebar.style.display = "block";
 
-                // Mostrar saludo personalizado
+                // Saludo
                 const doc = await firebase.firestore().collection("usuarios").doc(user.uid).get();
                 if (doc.exists) {
                     const data = doc.data();
@@ -613,12 +609,13 @@
                     saludo.textContent = "Hola usuario";
                 }
 
+                // Esperar unos milisegundos y ejecutar el hash
+                setTimeout(() => manejarCambioHash(), 50); // 💡 esto soluciona la carrera de eventos
+
             } else {
-                // Mostrar login y ocultar interfaz
+                // Mostrar login
                 authContainer.style.display = "block";
                 mainInterface.style.display = "none";
-
-                // Asegurarse de ocultar barra y botón en caso de estar visibles
                 if (menuToggle) menuToggle.style.display = "none";
                 if (sidebar) sidebar.style.display = "none";
             }
@@ -633,8 +630,8 @@
         function mostrarInicio() {
             window.location.hash = "#inicio";
             document.querySelector(".contenido-principal").innerHTML = `
-                                            <h2 id="saludo-usuario"></h2>
-                                        `;
+                                                <h2 id="saludo-usuario"></h2>
+                                            `;
 
             // Mostrar saludo nuevamente (si querés volverlo a cargar)
             const user = firebase.auth().currentUser;
@@ -650,11 +647,11 @@
         function mostrarMisProyectos() {
             window.location.hash = "#mis-proyectos";
             document.querySelector(".contenido-principal").innerHTML = `
-                                    <h3>Buscar Proyecto por Código SIGEVA</h3>
-                                    <input type="text" id="codigo-proyecto" placeholder="Ingresá el código Sigeva" style="padding: 10px; width: 300px; font-size: 14px;" />
-                                    <button onclick="buscarProyecto()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">Buscar</button>
-                                    <div id="resultado-proyecto" style="margin-top: 20px;"></div>
-                                `;
+                                        <h3>Buscar Proyecto por Código SIGEVA</h3>
+                                        <input type="text" id="codigo-proyecto" placeholder="Ingresá el código Sigeva" style="padding: 10px; width: 300px; font-size: 14px;" />
+                                        <button onclick="buscarProyecto()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">Buscar</button>
+                                        <div id="resultado-proyecto" style="margin-top: 20px;"></div>
+                                    `;
         }
     </script>
     <script>
@@ -688,21 +685,21 @@
                 }
 
                 let tablaHTML = `
-            <h3>Mis Proyectos Asociados</h3>
-            <table class="tabla-proyectos" id="tabla-proyectos">
-                <thead>
-                    <tr>
-                        <th onclick="ordenarTabla(0, this)">Estado <span class="flecha"></span></th>
-                        <th onclick="ordenarTabla(1, this)">Código <span class="flecha"></span></th>
-                        <th onclick="ordenarTabla(2, this)">Título <span class="flecha"></span></th>
-                        <th onclick="ordenarTabla(3, this)">Convocatoria <span class="flecha"></span></th>
-                        <th onclick="ordenarTabla(4, this)">Periodo <span class="flecha"></span></th>
-                        <th onclick="ordenarTabla(5, this)">Ejecución Presupuestaria <span class="flecha"></span></th>
-                        <th onclick="ordenarTabla(6, this)">Informes Académicos <span class="flecha"></span></th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
+                <h3>Mis Proyectos Asociados</h3>
+                <table class="tabla-proyectos" id="tabla-proyectos">
+                    <thead>
+                        <tr>
+                            <th onclick="ordenarTabla(0, this)">Estado <span class="flecha"></span></th>
+                            <th onclick="ordenarTabla(1, this)">Código <span class="flecha"></span></th>
+                            <th onclick="ordenarTabla(2, this)">Título <span class="flecha"></span></th>
+                            <th onclick="ordenarTabla(3, this)">Convocatoria <span class="flecha"></span></th>
+                            <th onclick="ordenarTabla(4, this)">Periodo <span class="flecha"></span></th>
+                            <th onclick="ordenarTabla(5, this)">Ejecución Presupuestaria <span class="flecha"></span></th>
+                            <th onclick="ordenarTabla(6, this)">Informes Académicos <span class="flecha"></span></th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 `;
 
                 querySnapshot.forEach(doc => {
@@ -727,25 +724,25 @@
                     }
 
                     tablaHTML += `
-                                    <tr>
-                                        <td style="${estiloEstado}">${estado}</td>
-                                        <td>${data.Codigo || "-"}</td>
-                                        <td>${data.titulo || "-"}</td>
-                                        <td>${data.convocatoria || "-"}</td>
-                                        <td>${data.periodo || "-"}</td>
-                                        <td>${isNaN(data.monto_total) ? "-" : `$${Number(data.monto_total).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
-                                        <td style="${estiloInformes}">${informes}</td>
-                                        <td>
-                                            <button onclick="verProyecto('${doc.id}')" style="padding: 6px 12px; font-size: 13px;">Ver</button>
-                                        </td>
-                                    </tr>
-                                `;
+                                        <tr>
+                                            <td style="${estiloEstado}">${estado}</td>
+                                            <td>${data.Codigo || "-"}</td>
+                                            <td>${data.titulo || "-"}</td>
+                                            <td>${data.convocatoria || "-"}</td>
+                                            <td>${data.periodo || "-"}</td>
+                                            <td>${isNaN(data.monto_total) ? "-" : `$${Number(data.monto_total).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
+                                            <td style="${estiloInformes}">${informes}</td>
+                                            <td>
+                                                <button onclick="verProyecto('${doc.id}')" style="padding: 6px 12px; font-size: 13px;">Ver</button>
+                                            </td>
+                                        </tr>
+                                    `;
                 });
 
                 tablaHTML += `
-                                    </tbody>
-                                </table>
-                            `;
+                                        </tbody>
+                                    </table>
+                                `;
 
                 contenido.innerHTML = tablaHTML;
 
@@ -757,6 +754,7 @@
     </script>
     <script>
         async function verProyecto(projectId) {
+            window.location.hash = `#ver-proyecto-${projectId}`;
             const contenido = document.querySelector(".contenido-principal");
             contenido.innerHTML = "<p>Cargando proyecto...</p>";
 
@@ -771,31 +769,31 @@
                 const data = doc.data();
 
                 contenido.innerHTML = `
-                                <h3>Detalle del Proyecto</h3>
-                                <table class="tabla-ver-proyecto">
-                                    <tr><th>Estado</th><td>${data.estado || "-"}</td></tr>
-                                    <tr><th>Código SIGEVA</th><td>${data.Codigo || "-"}</td></tr>
-                                    <tr><th>Título</th><td>${data.titulo || "-"}</td></tr>
-                                    <tr><th>Resumen</th><td>${data.resumen || "-"}</td></tr>
-                                    <tr><th>Titular</th><td>${data.titular || "-"}</td></tr>
-                                    <tr><th>Presupuesto</th><td>${isNaN(data.monto_total) ? "-" : `$${Number(data.monto_total).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
-                                    <tr><th>Convocatoria</th><td>${data.convocatoria || "-"}</td></tr>
-                                    <tr><th>Periodo</th><td>${data.periodo || "-"}</td></tr>
-                                    <tr><th>Financiamiento</th><td>${data.nombre_externa || "-"}</td></tr>
-                                    <tr><th>Tipo de proyecto</th><td>${data.tipo_de_proyecto || "-"}</td></tr>
-                                    <tr><th>Tipo de actividad</th><td>${data.tipo_de_actividad || "-"}</td></tr>
-                                    <tr><th>Área de conocimiento</th><td>${data.area_de_conocimiento || "-"}</td></tr>
-                                    <tr><th>Disciplina</th><td>${data.disciplina || "-"}</td></tr>
-                                    <tr><th>Lugar de radicación del proyecto</th><td>${data.lugar_de_radicacion_del_proyecto || "-"}</td></tr>
-                                    <tr><th>Objetivo socioeconomico</th><td>${data.objetivo_socioeconomico || "-"}</td></tr>
-                                    <tr><th>Resolución</th><td>${data.resolucion || "-"}</td></tr>
-                                    <tr><th>Expediente</th><td>${data.expediente || "-"}</td></tr>
-                                </table>
+                                    <h3>Detalle del Proyecto</h3>
+                                    <table class="tabla-ver-proyecto">
+                                        <tr><th>Estado</th><td>${data.estado || "-"}</td></tr>
+                                        <tr><th>Código SIGEVA</th><td>${data.Codigo || "-"}</td></tr>
+                                        <tr><th>Título</th><td>${data.titulo || "-"}</td></tr>
+                                        <tr><th>Resumen</th><td>${data.resumen || "-"}</td></tr>
+                                        <tr><th>Titular</th><td>${data.titular || "-"}</td></tr>
+                                        <tr><th>Presupuesto</th><td>${isNaN(data.monto_total) ? "-" : `$${Number(data.monto_total).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
+                                        <tr><th>Convocatoria</th><td>${data.convocatoria || "-"}</td></tr>
+                                        <tr><th>Periodo</th><td>${data.periodo || "-"}</td></tr>
+                                        <tr><th>Financiamiento</th><td>${data.nombre_externa || "-"}</td></tr>
+                                        <tr><th>Tipo de proyecto</th><td>${data.tipo_de_proyecto || "-"}</td></tr>
+                                        <tr><th>Tipo de actividad</th><td>${data.tipo_de_actividad || "-"}</td></tr>
+                                        <tr><th>Área de conocimiento</th><td>${data.area_de_conocimiento || "-"}</td></tr>
+                                        <tr><th>Disciplina</th><td>${data.disciplina || "-"}</td></tr>
+                                        <tr><th>Lugar de radicación del proyecto</th><td>${data.lugar_de_radicacion_del_proyecto || "-"}</td></tr>
+                                        <tr><th>Objetivo socioeconomico</th><td>${data.objetivo_socioeconomico || "-"}</td></tr>
+                                        <tr><th>Resolución</th><td>${data.resolucion || "-"}</td></tr>
+                                        <tr><th>Expediente</th><td>${data.expediente || "-"}</td></tr>
+                                    </table>
 
-                                <div id="contenido-extra" style="margin-top: 30px;">
-                                    <p><em>(Aquí se mostrará información adicional del proyecto...)</em></p>
-                                </div>
-                            `;
+                                    <div id="contenido-extra" style="margin-top: 30px;">
+                                        <p><em>(Aquí se mostrará información adicional del proyecto...)</em></p>
+                                    </div>
+                                `;
             } catch (error) {
                 console.error("Error al obtener el proyecto:", error);
                 contenido.innerHTML = "<p style='color: red;'>Error al obtener el proyecto.</p>";
@@ -859,16 +857,37 @@
         function manejarCambioHash() {
             const hash = window.location.hash;
 
-            switch (hash) {
-                case "#mis-proyectos":
-                    mostrarMisProyectos();
-                    break;
-                case "#inicio":
-                default:
-                    mostrarInicio();
-                    break;
+            if (hash === "#mis-proyectos") {
+                mostrarMisProyectos();
+            } else if (hash === "#inicio" || hash === "") {
+                mostrarInicio();
+            } else if (hash.startsWith("#ver-proyecto-")) {
+                const projectId = hash.replace("#ver-proyecto-", "");
+                verProyecto(projectId);
+            } else {
+                mostrarInicio(); // fallback
             }
         }
+    </script>
+    <script>
+        function manejarCambioHash() {
+            const hash = window.location.hash;
+
+            if (!firebase.auth().currentUser || !firebase.auth().currentUser.emailVerified) {
+                return; // No hacer nada si el usuario no está autenticado
+            }
+
+            if (hash === "#mis-proyectos") {
+                mostrarMisProyectos();
+            } else if (hash.startsWith("#ver-proyecto-")) {
+                const projectId = hash.replace("#ver-proyecto-", "");
+                verProyecto(projectId);
+            } else {
+                mostrarInicio();
+            }
+        }
+
+        window.addEventListener("hashchange", manejarCambioHash);
     </script>
 </body>
 </html>
