@@ -242,7 +242,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            font-size: 14px;
+            font-size: 12px;
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             border-radius: 8px;
@@ -254,20 +254,70 @@
                 padding: 12px 16px;
                 text-align: left;
             }
+                .tabla-proyectos td:nth-child(1), /* ESTADO */
+                .tabla-proyectos td:nth-child(2), /* CÓDIGO */
+                .tabla-proyectos td:nth-child(4), /* CONVOCATORIA */
+                .tabla-proyectos td:nth-child(5), /* PERIODO */
+                .tabla-proyectos td:nth-child(6), /* EJECUCIÓN PRESUPUESTARIA */
+                .tabla-proyectos td:nth-child(7), /* INFORMES ACADÉMICOS */
+                .tabla-proyectos td:nth-child(8) { /* ACCIONES */
+                    text-align: center;
+                }
 
             .tabla-proyectos th {
                 background-color: #004080;
                 color: #ffffff;
                 font-weight: bold;
                 text-transform: uppercase;
+                text-align: center;
             }
-
+            .tabla-proyectos td:nth-child(1) {
+                min-width: 90px;
+            }
+            .tabla-proyectos td:nth-child(2) {
+                min-width: 10px;
+            }
+            .tabla-proyectos td:nth-child(4) {
+                min-width: 90px;
+            }
+            .tabla-proyectos td:nth-child(5) {
+                min-width: 90px;
+            }
+            .tabla-proyectos td:nth-child(7) {
+                min-width: 90px;
+            }
             .tabla-proyectos tr:nth-child(even) {
                 background-color: #f5f5f5;
             }
 
             .tabla-proyectos tr:hover {
                 background-color: #e0ecf7;
+            }
+
+        .tabla-ver-proyecto {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+            .tabla-ver-proyecto th {
+                width: 80px; /* ⬅️ fijá el ancho que quieras */
+                background-color: #004080;
+                color: white;
+                padding: 12px 16px;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .tabla-ver-proyecto td {
+                padding: 12px 16px;
+                text-align: left;
+                vertical-align: middle;
             }
     </style>
 </head>
@@ -582,8 +632,8 @@
     <script>
         function mostrarInicio() {
             document.querySelector(".contenido-principal").innerHTML = `
-                                <h2 id="saludo-usuario"></h2>
-                            `;
+                                    <h2 id="saludo-usuario"></h2>
+                                `;
 
             // Mostrar saludo nuevamente (si querés volverlo a cargar)
             const user = firebase.auth().currentUser;
@@ -598,11 +648,11 @@
         }
         function mostrarMisProyectos() {
             document.querySelector(".contenido-principal").innerHTML = `
-                        <h3>Buscar Proyecto por Código SIGEVA</h3>
-                        <input type="text" id="codigo-proyecto" placeholder="Ingresá el código Sigeva" style="padding: 10px; width: 300px; font-size: 14px;" />
-                        <button onclick="buscarProyecto()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">Buscar</button>
-                        <div id="resultado-proyecto" style="margin-top: 20px;"></div>
-                    `;
+                            <h3>Buscar Proyecto por Código SIGEVA</h3>
+                            <input type="text" id="codigo-proyecto" placeholder="Ingresá el código Sigeva" style="padding: 10px; width: 300px; font-size: 14px;" />
+                            <button onclick="buscarProyecto()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">Buscar</button>
+                            <div id="resultado-proyecto" style="margin-top: 20px;"></div>
+                        `;
         }
     </script>
     <script>
@@ -617,7 +667,6 @@
             }
 
             try {
-                // Obtener CUIT del usuario autenticado
                 const usuarioDoc = await firebase.firestore().collection("usuarios").doc(user.uid).get();
                 if (!usuarioDoc.exists) {
                     contenido.innerHTML = "<p style='color: red;'>Datos del usuario no encontrados.</p>";
@@ -626,7 +675,6 @@
 
                 const cuitUsuario = usuarioDoc.data().cuit;
 
-                // Buscar proyectos asociados al CUIT
                 const querySnapshot = await firebase.firestore()
                     .collection("proyectos")
                     .where("cuit", "==", cuitUsuario)
@@ -638,33 +686,65 @@
                 }
 
                 let tablaHTML = `
-                    <h3>Mis Proyectos Asociados</h3>
-                    <table class="tabla-proyectos">
-                        <tr>
-                            <th>Código SIGEVA</th>
-                            <th>Título</th>
-                            <th>Presupuesto</th>
-                            <th>Convocatoria</th>
-                            <th>Resolución</th>
-                            <th>Acciones</th>
-                        </tr>
-                `;
+    <h3>Mis Proyectos Asociados</h3>
+    <table class="tabla-proyectos" id="tabla-proyectos">
+        <thead>
+            <tr>
+                <th onclick="ordenarTabla(0, this)">Estado <span class="flecha"></span></th>
+                <th onclick="ordenarTabla(1, this)">Código <span class="flecha"></span></th>
+                <th onclick="ordenarTabla(2, this)">Título <span class="flecha"></span></th>
+                <th onclick="ordenarTabla(3, this)">Convocatoria <span class="flecha"></span></th>
+                <th onclick="ordenarTabla(4, this)">Periodo <span class="flecha"></span></th>
+                <th onclick="ordenarTabla(5, this)">Ejecución Presupuestaria <span class="flecha"></span></th>
+                <th onclick="ordenarTabla(6, this)">Informes Académicos <span class="flecha"></span></th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+`;
 
                 querySnapshot.forEach(doc => {
                     const data = doc.data();
+
+                    // Estilo condicional para ESTADO
+                    let estado = data.estado || "-";
+                    let estiloEstado = "";
+                    if (estado.toUpperCase() === "FINALIZADO") {
+                        estiloEstado = "background-color: rgba(144, 238, 144, 0.4);"; // verde claro
+                    } else if (estado.toUpperCase() === "EN EJECUCION") {
+                        estiloEstado = "background-color: rgba(255, 165, 0, 0.3);"; // naranja claro
+                    }
+
+                    // Estilo condicional para INFORMES ACADÉMICOS
+                    let informes = data.informes_academicos || "-";
+                    let estiloInformes = "";
+                    if (informes.toUpperCase() === "ENTREGADOS") {
+                        estiloInformes = "background-color: rgba(144, 238, 144, 0.4);"; // verde claro
+                    } else if (informes.toUpperCase() === "PENDIENTES") {
+                        estiloInformes = "background-color: rgba(255, 99, 71, 0.3);"; // rojo claro
+                    }
+
                     tablaHTML += `
-            <tr>
-                <td>${data.sigeva || "-"}</td>
-                <td>${data.titulo || "-"}</td>
-                <td>${isNaN(data.presupuesto) ? "-" : data.presupuesto}</td>
-                <td>${data.convocatoria || "-"}</td>
-                <td>${data.resolucion || "-"}</td>
-                <td><button onclick="verProyecto('${doc.id}')" style="padding: 6px 12px; font-size: 13px;">Ver</button></td>
-            </tr>
-        `;
+                            <tr>
+                                <td style="${estiloEstado}">${estado}</td>
+                                <td>${data.Codigo || "-"}</td>
+                                <td>${data.titulo || "-"}</td>
+                                <td>${data.convocatoria || "-"}</td>
+                                <td>${data.periodo || "-"}</td>
+                                <td>${isNaN(data.monto_total) ? "-" : `$${Number(data.monto_total).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
+                                <td style="${estiloInformes}">${informes}</td>
+                                <td>
+                                    <button onclick="verProyecto('${doc.id}')" style="padding: 6px 12px; font-size: 13px;">Ver</button>
+                                </td>
+                            </tr>
+                        `;
                 });
 
-                tablaHTML += "</table>";
+                tablaHTML += `
+                            </tbody>
+                        </table>
+                    `;
+
                 contenido.innerHTML = tablaHTML;
 
             } catch (error) {
@@ -689,19 +769,31 @@
                 const data = doc.data();
 
                 contenido.innerHTML = `
-                    <h3>Detalle del Proyecto</h3>
-                    <table class="tabla-proyectos">
-                        <tr><th>Código SIGEVA</th><td>${data.sigeva || "-"}</td></tr>
-                        <tr><th>Título</th><td>${data.titulo || "-"}</td></tr>
-                        <tr><th>Presupuesto</th><td>${isNaN(data.presupuesto) ? "-" : data.presupuesto}</td></tr>
-                        <tr><th>Convocatoria</th><td>${data.convocatoria || "-"}</td></tr>
-                        <tr><th>Resolución</th><td>${data.resolucion || "-"}</td></tr>
-                    </table>
+                        <h3>Detalle del Proyecto</h3>
+                        <table class="tabla-ver-proyecto">
+                            <tr><th>Estado</th><td>${data.estado || "-"}</td></tr>
+                            <tr><th>Código SIGEVA</th><td>${data.Codigo || "-"}</td></tr>
+                            <tr><th>Título</th><td>${data.titulo || "-"}</td></tr>
+                            <tr><th>Resumen</th><td>${data.resumen || "-"}</td></tr>
+                            <tr><th>Titular</th><td>${data.titular || "-"}</td></tr>
+                            <tr><th>Presupuesto</th><td>${isNaN(data.monto_total) ? "-" : `$${Number(data.monto_total).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
+                            <tr><th>Convocatoria</th><td>${data.convocatoria || "-"}</td></tr>
+                            <tr><th>Periodo</th><td>${data.periodo || "-"}</td></tr>
+                            <tr><th>Financiamiento</th><td>${data.nombre_externa || "-"}</td></tr>
+                            <tr><th>Tipo de proyecto</th><td>${data.tipo_de_proyecto || "-"}</td></tr>
+                            <tr><th>Tipo de actividad</th><td>${data.tipo_de_actividad || "-"}</td></tr>
+                            <tr><th>Área de conocimiento</th><td>${data.area_de_conocimiento || "-"}</td></tr>
+                            <tr><th>Disciplina</th><td>${data.disciplina || "-"}</td></tr>
+                            <tr><th>Lugar de radicación del proyecto</th><td>${data.lugar_de_radicacion_del_proyecto || "-"}</td></tr>
+                            <tr><th>Objetivo socioeconomico</th><td>${data.objetivo_socioeconomico || "-"}</td></tr>
+                            <tr><th>Resolución</th><td>${data.resolucion || "-"}</td></tr>
+                            <tr><th>Expediente</th><td>${data.expediente || "-"}</td></tr>
+                        </table>
 
-                    <div id="contenido-extra" style="margin-top: 30px;">
-                        <p><em>(Aquí se mostrará información adicional del proyecto...)</em></p>
-                    </div>
-                `;
+                        <div id="contenido-extra" style="margin-top: 30px;">
+                            <p><em>(Aquí se mostrará información adicional del proyecto...)</em></p>
+                        </div>
+                    `;
             } catch (error) {
                 console.error("Error al obtener el proyecto:", error);
                 contenido.innerHTML = "<p style='color: red;'>Error al obtener el proyecto.</p>";
@@ -713,6 +805,49 @@
             firebase.auth().signOut().then(() => {
                 location.reload(); // opcional, o simplemente ocultás interfaz y mostrás login
             });
+        }
+    </script>
+    <script>
+        let ordenAscendente = [];
+
+        function ordenarTabla(columna, th) {
+            const tabla = document.getElementById("tabla-proyectos");
+            const cuerpo = tabla.tBodies[0];
+            const filas = Array.from(cuerpo.rows);
+
+            // Alternar orden
+            if (ordenAscendente[columna] === undefined) {
+                ordenAscendente[columna] = true;
+            } else {
+                ordenAscendente[columna] = !ordenAscendente[columna];
+            }
+
+            // Borrar flechas anteriores
+            document.querySelectorAll(".tabla-proyectos th .flecha").forEach(f => f.textContent = "");
+
+            // Insertar flecha actual
+            th.querySelector(".flecha").textContent = ordenAscendente[columna] ? " 🔼" : " 🔽";
+
+            // Ordenar filas
+            filas.sort((a, b) => {
+                let valA = a.cells[columna].textContent.trim().toLowerCase();
+                let valB = b.cells[columna].textContent.trim().toLowerCase();
+
+                const numA = parseFloat(valA.replace(/[$.]/g, "").replace(",", "."));
+                const numB = parseFloat(valB.replace(/[$.]/g, "").replace(",", "."));
+
+                if (!isNaN(numA) && !isNaN(numB)) {
+                    return ordenAscendente[columna] ? numA - numB : numB - numA;
+                }
+
+                return ordenAscendente[columna]
+                    ? valA.localeCompare(valB)
+                    : valB.localeCompare(valA);
+            });
+
+            // Aplicar orden al DOM
+            cuerpo.innerHTML = "";
+            filas.forEach(fila => cuerpo.appendChild(fila));
         }
     </script>
 </body>
