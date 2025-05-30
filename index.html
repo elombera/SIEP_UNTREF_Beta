@@ -144,14 +144,19 @@
             font-size: 14px;
         }
         #menu-toggle {
-            position: absolute;
-            top: 80px; /* justo debajo del header */
-            left: 10px;
+            position: fixed;
+            top: 85px; /* justo debajo del header */
+            left: 1px;
             font-size: 18px;
             cursor: pointer;
             transition: left 0.3s ease;
             z-index: 1002;
             display: none;
+            background-color: rgba(0, 64, 128, 0.95);
+            padding: 8px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            color: white;
         }
 
         #sidebar {
@@ -159,7 +164,7 @@
             top: 0px; /* debajo del header */
             left: -160px;
             width: 160px;
-            height: calc(100% - 72px);
+            height: calc(100% - 0px);
             background-color: rgba(0, 64, 128, 0.95); /* azul con transparencia */
             color: white;
             padding-top: 20px;
@@ -183,10 +188,19 @@
                         text-decoration: none;
                         display: block;
                     }
-
+        #main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
         #main-content {
             transition: margin-left 0.3s ease;
-            padding: 20px;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .contenido-principal {
             flex: 1;
         }
 
@@ -200,7 +214,7 @@
         }
 
         body.sidebar-open #menu-toggle {
-            left: 170px;
+            left: 161px;
         }
         footer {
             background-color: #002855;
@@ -208,6 +222,7 @@
             text-align: center;
             padding: 20px;
             font-size: 14px;
+            margin-top: auto;
         }
 
         .footer-redes {
@@ -222,6 +237,37 @@
             .footer-redes img {
                 height: 24px;
                 width: 24px;
+            }
+        .tabla-proyectos {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+            .tabla-proyectos th,
+            .tabla-proyectos td {
+                padding: 12px 16px;
+                text-align: left;
+            }
+
+            .tabla-proyectos th {
+                background-color: #004080;
+                color: #ffffff;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            .tabla-proyectos tr:nth-child(even) {
+                background-color: #f5f5f5;
+            }
+
+            .tabla-proyectos tr:hover {
+                background-color: #e0ecf7;
             }
     </style>
 </head>
@@ -299,16 +345,13 @@
                 <li><a href="#" onclick="logout()">Cerrar Sesión</a></li>
             </ul>
         </div>
-
-        <div id="main-content">
-            <h2 id="saludo-usuario"></h2>
-            <div class="contenido-principal">
-                <div id="mis-proyectos">
-                    <h3>Buscar Proyecto por Código SIGEVA</h3>
-                    <input type="text" id="codigo-proyecto" placeholder="Ingresá el código Sigeva" style="padding: 10px; width: 300px; font-size: 14px;" />
-                    <button onclick="buscarProyecto()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">Buscar</button>
-
-                    <div id="resultado-proyecto" style="margin-top: 20px;"></div>
+        <div id="main-wrapper">
+            <div id="main-content">
+                <h2 id="saludo-usuario"></h2>
+                <div class="contenido-principal">
+                    <div id="mis-proyectos">
+                        <div id="resultado-proyecto" style="margin-top: 20px;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -539,8 +582,8 @@
     <script>
         function mostrarInicio() {
             document.querySelector(".contenido-principal").innerHTML = `
-                        <h2 id="saludo-usuario"></h2>
-                    `;
+                                <h2 id="saludo-usuario"></h2>
+                            `;
 
             // Mostrar saludo nuevamente (si querés volverlo a cargar)
             const user = firebase.auth().currentUser;
@@ -555,52 +598,113 @@
         }
         function mostrarMisProyectos() {
             document.querySelector(".contenido-principal").innerHTML = `
-                <h3>Buscar Proyecto por Código SIGEVA</h3>
-                <input type="text" id="codigo-proyecto" placeholder="Ingresá el código Sigeva" style="padding: 10px; width: 300px; font-size: 14px;" />
-                <button onclick="buscarProyecto()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">Buscar</button>
-                <div id="resultado-proyecto" style="margin-top: 20px;"></div>
-            `;
+                        <h3>Buscar Proyecto por Código SIGEVA</h3>
+                        <input type="text" id="codigo-proyecto" placeholder="Ingresá el código Sigeva" style="padding: 10px; width: 300px; font-size: 14px;" />
+                        <button onclick="buscarProyecto()" style="padding: 10px 20px; font-size: 14px; margin-left: 10px;">Buscar</button>
+                        <div id="resultado-proyecto" style="margin-top: 20px;"></div>
+                    `;
         }
     </script>
     <script>
-        async function buscarProyecto() {
-            const codigo = document.getElementById("codigo-proyecto").value.trim().toUpperCase();
-            const resultado = document.getElementById("resultado-proyecto");
+        async function mostrarMisProyectos() {
+            const contenido = document.querySelector(".contenido-principal");
+            contenido.innerHTML = "<p>Cargando proyectos...</p>";
 
-            if (!codigo) {
-                resultado.innerHTML = "<p style='color: red;'>Por favor ingresá un código.</p>";
+            const user = firebase.auth().currentUser;
+            if (!user) {
+                contenido.innerHTML = "<p style='color: red;'>Usuario no autenticado.</p>";
                 return;
             }
 
             try {
-                const querySnapshot = await firebase.firestore()
-                    .collection("proyectos")
-                    .where("sigeva", "==", codigo)
-                    .get();
-
-                if (querySnapshot.empty) {
-                    resultado.innerHTML = `<p style="color: red;">No se encontró ningún proyecto con ese código.</p>`;
+                // Obtener CUIT del usuario autenticado
+                const usuarioDoc = await firebase.firestore().collection("usuarios").doc(user.uid).get();
+                if (!usuarioDoc.exists) {
+                    contenido.innerHTML = "<p style='color: red;'>Datos del usuario no encontrados.</p>";
                     return;
                 }
 
-                // Si hay resultados
-                const doc = querySnapshot.docs[0];
+                const cuitUsuario = usuarioDoc.data().cuit;
+
+                // Buscar proyectos asociados al CUIT
+                const querySnapshot = await firebase.firestore()
+                    .collection("proyectos")
+                    .where("cuit", "==", cuitUsuario)
+                    .get();
+
+                if (querySnapshot.empty) {
+                    contenido.innerHTML = "<p>No se encontraron proyectos asociados a tu CUIT.</p>";
+                    return;
+                }
+
+                let tablaHTML = `
+                    <h3>Mis Proyectos Asociados</h3>
+                    <table class="tabla-proyectos">
+                        <tr>
+                            <th>Código SIGEVA</th>
+                            <th>Título</th>
+                            <th>Presupuesto</th>
+                            <th>Convocatoria</th>
+                            <th>Resolución</th>
+                            <th>Acciones</th>
+                        </tr>
+                `;
+
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    tablaHTML += `
+            <tr>
+                <td>${data.sigeva || "-"}</td>
+                <td>${data.titulo || "-"}</td>
+                <td>${isNaN(data.presupuesto) ? "-" : data.presupuesto}</td>
+                <td>${data.convocatoria || "-"}</td>
+                <td>${data.resolucion || "-"}</td>
+                <td><button onclick="verProyecto('${doc.id}')" style="padding: 6px 12px; font-size: 13px;">Ver</button></td>
+            </tr>
+        `;
+                });
+
+                tablaHTML += "</table>";
+                contenido.innerHTML = tablaHTML;
+
+            } catch (error) {
+                console.error("Error al cargar proyectos:", error);
+                contenido.innerHTML = "<p style='color: red;'>Error al cargar proyectos.</p>";
+            }
+        }
+    </script>
+    <script>
+        async function verProyecto(projectId) {
+            const contenido = document.querySelector(".contenido-principal");
+            contenido.innerHTML = "<p>Cargando proyecto...</p>";
+
+            try {
+                const doc = await firebase.firestore().collection("proyectos").doc(projectId).get();
+
+                if (!doc.exists) {
+                    contenido.innerHTML = "<p style='color: red;'>Proyecto no encontrado.</p>";
+                    return;
+                }
+
                 const data = doc.data();
 
-                resultado.innerHTML = `
-                    <table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+                contenido.innerHTML = `
+                    <h3>Detalle del Proyecto</h3>
+                    <table class="tabla-proyectos">
                         <tr><th>Código SIGEVA</th><td>${data.sigeva || "-"}</td></tr>
                         <tr><th>Título</th><td>${data.titulo || "-"}</td></tr>
                         <tr><th>Presupuesto</th><td>${isNaN(data.presupuesto) ? "-" : data.presupuesto}</td></tr>
-                        <tr><th>CUIT</th><td>${data.cuit || "-"}</td></tr>
                         <tr><th>Convocatoria</th><td>${data.convocatoria || "-"}</td></tr>
                         <tr><th>Resolución</th><td>${data.resolucion || "-"}</td></tr>
                     </table>
-                `;
 
+                    <div id="contenido-extra" style="margin-top: 30px;">
+                        <p><em>(Aquí se mostrará información adicional del proyecto...)</em></p>
+                    </div>
+                `;
             } catch (error) {
-                console.error("Error al buscar proyecto:", error);
-                resultado.innerHTML = `<p style="color: red;">Error al buscar proyecto.</p>`;
+                console.error("Error al obtener el proyecto:", error);
+                contenido.innerHTML = "<p style='color: red;'>Error al obtener el proyecto.</p>";
             }
         }
     </script>
