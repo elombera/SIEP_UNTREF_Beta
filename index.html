@@ -1993,7 +1993,29 @@
                     if (data.urlArchivo) {
                         document.getElementById("archivo-cargado-final").innerHTML = `
                     Archivo cargado: <a href="${data.urlArchivo}" target="_blank">Ver PDF</a>
-                    `;
+                `;
+                    }
+
+                    // 🚫 Si ya fue enviado, deshabilitar campos y botones
+                    if (data.enviado === true) {
+                        document.querySelectorAll('#tab-cuestionario textarea, #final-material-pdf').forEach(el => el.disabled = true);
+                        document.getElementById("btn-guardar-informe-final").disabled = true;
+                        document.getElementById("btn-enviar-informe-final").disabled = true;
+
+                        // Opcional: marcar visualmente que está enviado
+                        document.getElementById("btn-enviar-informe-final").textContent = "Informe enviado";
+                        if (data.fechaEnvio) {
+                            const fecha = new Date(data.fechaEnvio);
+                            const fechaFormateada = fecha.toLocaleString("es-AR", {
+                                day: '2-digit', month: '2-digit', year: 'numeric',
+                                hour: '2-digit', minute: '2-digit'
+                            });
+
+                            const cartel = document.createElement("div");
+                            cartel.textContent = `✅ Informe final enviado el: ${fechaFormateada}`;
+                            cartel.style = "margin-top: 20px; padding: 10px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px;";
+                            document.getElementById("tab-cuestionario").prepend(cartel);
+                        }
                     }
                 }
             } catch (error) {
@@ -2045,25 +2067,26 @@
         }
 
         async function confirmarEnvioInformeFinal(codigo) {
+            cerrarModalConfirmacionFinal();
+            mostrarCargando();
+
             try {
-                // Guardar antes de enviar
-                await guardarCuestionarioFinal(codigo);
+                await guardarCuestionarioFinal(codigo); // Asegurarse de guardar antes de marcar como enviado
 
-                // Desactivar campos
-                document.querySelectorAll('#tab-cuestionario textarea, #final-material-pdf, #btn-guardar-informe-final')
-                    .forEach(el => el.disabled = true);
+                const fechaEnvio = new Date().toISOString();
 
-                // Actualizar estado de envío en Firestore
                 await firebase.firestore().collection("informes_finales").doc(codigo).set({
                     enviado: true,
-                    fechaEnvio: new Date().toISOString()
+                    fechaEnvio: fechaEnvio
                 }, { merge: true });
 
-                cerrarModalConfirmacionFinal();
                 alert("Informe final enviado correctamente.");
+                cargarCuestionarioFinal(codigo); // Vuelve a cargar con bloqueo
             } catch (error) {
-                console.error("Error al enviar el informe final:", error);
+                console.error("Error al enviar informe final:", error);
                 alert("Ocurrió un error al enviar el informe.");
+            } finally {
+                ocultarCargando();
             }
         }
     </script>
