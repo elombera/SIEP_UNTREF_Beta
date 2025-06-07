@@ -297,28 +297,32 @@
         .tabla-ver-proyecto {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
             font-size: 14px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            overflow: hidden;
         }
 
             .tabla-ver-proyecto th {
-                width: 80px; /* ⬅️ fijá el ancho que quieras */
-                background-color: #004080;
-                color: white;
-                padding: 12px 16px;
-                text-align: center;
-                vertical-align: middle;
+                text-align: left;
+                background-color: rgba(33, 97, 140, 0.08);
+                color: #333;
+                padding: 4px 6px; /* más compacto */
+                width: 25%;
+                vertical-align: top;
+                border: 1px solid #ddd;
+                white-space: nowrap;
             }
 
             .tabla-ver-proyecto td {
-                padding: 12px 16px;
-                text-align: left;
-                vertical-align: middle;
+                padding: 4px 6px; /* más compacto */
+                vertical-align: top;
+                border: 1px solid #ddd;
+                background-color: #fff;
             }
+
+            .tabla-ver-proyecto tr:nth-child(even) td {
+                background-color: #f9f9f9;
+            }
+
+        
         .btn-volver {
             padding: 6px 12px;
             font-size: 13px;
@@ -956,26 +960,63 @@
 
                                                                                                                                                                                         ${botonesExtra}
 
-                                                                                                                                                                                        <h3>Detalle del Proyecto</h3>
-                                                                                                                                                                                        <table class="tabla-ver-proyecto">
-                                                                                                                                                                                            <tr><th>Estado</th><td style="${estiloEstado}">${estado}</td></tr>
-                                                                                                                                                                                            <tr><th>Código SIGEVA</th><td>${data.Codigo || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Título</th><td>${data.titulo || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Resumen</th><td>${data.resumen || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Titular</th><td>${data.titular || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Presupuesto</th><td>${isNaN(data.monto_total) ? "-" : `$${Number(data.monto_total).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
-                                                                                                                                                                                            <tr><th>Convocatoria</th><td>${data.convocatoria || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Periodo</th><td>${data.periodo || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Financiamiento</th><td>${data.nombre_externa || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Tipo de proyecto</th><td>${data.tipo_de_proyecto || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Tipo de actividad</th><td>${data.tipo_de_actividad || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Área de conocimiento</th><td>${data.area_de_conocimiento || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Disciplina</th><td>${data.disciplina || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Lugar de radicación del proyecto</th><td>${data.lugar_de_radicacion_del_proyecto || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Objetivo socioeconómico</th><td>${data.objetivo_socioeconomico || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Resolución</th><td>${data.resolucion || "-"}</td></tr>
-                                                                                                                                                                                            <tr><th>Expediente</th><td>${data.expediente || "-"}</td></tr>
-                                                                                                                                                                                        </table>
+<h3>Detalle del Proyecto</h3>
+
+<table class="tabla-ver-proyecto">
+  <tr>
+    <th>Estado</th>
+    <td colspan="5" style="${estiloEstado}; font-weight: bold;">${estado}</td>
+  </tr>
+
+  <tr>
+    <th>Título</th>
+    <td colspan="2">${data.titulo || "-"}</td>
+    <th>Titular</th>
+    <td colspan="2">${data.titular || "-"}</td>
+  </tr>
+
+  <tr>
+    <th>Resumen</th>
+    <td colspan="5">${data.resumen || "-"}</td>
+  </tr>
+
+  <tr>
+    <th>Código SIGEVA</th>
+    <td>${data.Codigo || "-"}</td>
+    <th>Convocatoria</th>
+    <td>${data.convocatoria || "-"}</td>
+    <th>Periodo</th>
+    <td>${data.periodo || "-"}</td>
+  </tr>
+
+  <tr>
+    <th>Financiamiento</th>
+    <td>${data.nombre_externa || "-"}</td>
+    <th>Tipo de proyecto</th>
+    <td>${data.tipo_de_proyecto || "-"}</td>
+    <th>Tipo de actividad</th>
+    <td>${data.tipo_de_actividad || "-"}</td>
+  </tr>
+
+  <tr>
+    <th>Área de conocimiento</th>
+    <td colspan="2">${data.area_de_conocimiento || "-"}</td>
+    <th>Disciplina</th>
+    <td colspan="2">${data.disciplina || "-"}</td>
+  </tr>
+
+  <tr>
+    <th>Objetivo socioeconómico</th>
+    <td colspan="5">${data.objetivo_socioeconomico || "-"}</td>
+  </tr>
+
+  <tr>
+    <th>Resolución</th>
+    <td colspan="2">${data.resolucion || "-"}</td>
+    <th>Expediente</th>
+    <td colspan="2">${data.expediente || "-"}</td>
+  </tr>
+</table>
                                                                                                                                                                                     `;
             } catch (error) {
                 console.error("Error al obtener el proyecto:", error);
