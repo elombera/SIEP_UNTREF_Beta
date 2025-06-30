@@ -2042,15 +2042,17 @@
         <button type="button" onclick="buscarPorDOI()" style="width: 100%;">Buscar DOI</button>
       </div>
 
-      <!-- Buscar por ISSN -->
-      <div style="flex: 1; min-width: 220px;">
-        <div style="display: flex; align-items: center; gap: 6px;">
-          <span onclick="mostrarInfoISSN()" style="cursor: pointer; font-size: 18px;" title="¿Qué es esto?">ℹ️</span>
-          <label for="issn-articulo" style="margin: 0;"><strong>Buscar por ISSN:</strong></label>
-        </div>
-        <input type="text" id="issn-articulo" class="form-input" placeholder="Ej: 1234-5678" style="width: 100%; margin-bottom: 6px;">
-        <button type="button" onclick="buscarPorISSN()" style="width: 100%;">Buscar ISSN</button>
-      </div>
+
+<!-- Buscar por ISSN -->
+<div style="flex: 1; min-width: 220px;">
+  <div style="display: flex; align-items: center; gap: 6px;">
+    <span onclick="mostrarInfoISSN()" style="cursor: pointer; font-size: 18px;" title="¿Qué es esto?">ℹ️</span>
+    <label for="buscar-issn" style="margin: 0;"><strong>Buscar por ISSN:</strong></label>
+  </div>
+  <input type="text" id="buscar-issn" class="form-input" placeholder="Ej: 1234-5678" style="width: 100%; margin-bottom: 6px;">
+  <button type="button" onclick="buscarPorISSN()" style="width: 100%;">Buscar ISSN</button>
+</div>
+
 </div>
 
           <!-- Campos principales -->
@@ -2563,7 +2565,7 @@
             }
         }
         async function buscarPorISSN() {
-            const issn = document.getElementById("input-issn").value.trim();
+            const issn = document.getElementById("buscar-issn").value.trim(); // <--- el input editable ahora tiene id="buscar-issn"
             if (!issn) return alert("Ingrese un ISSN válido.");
 
             try {
@@ -2577,10 +2579,10 @@
 
                 const info = data.results[0];
 
-                // Completar campos
+                // Completar campos visibles en el formulario
                 document.getElementById("revista-articulo").value = info.display_name || "";
                 document.getElementById("editorial-articulo").value = info.host_organization_name || "";
-                document.getElementById("issn-articulo").value = info.issn_l || "";
+                document.getElementById("issn-articulo").value = info.issn_l || "";  // este campo es readonly
 
             } catch (err) {
                 console.error("Error al consultar OpenAlex:", err);
