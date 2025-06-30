@@ -725,8 +725,8 @@
     <script>
         function mostrarInicio() {
             document.querySelector(".contenido-principal").innerHTML = `
-                                                                                                                                                                                                                                                <h2 id="saludo-usuario"></h2>
-                                                                                                                                                                                                                                            `;
+                                                                                                                                                                                                                                                                    <h2 id="saludo-usuario"></h2>
+                                                                                                                                                                                                                                                                `;
 
             // Mostrar saludo nuevamente (si querés volverlo a cargar)
             const user = firebase.auth().currentUser;
@@ -774,23 +774,23 @@
                 }
 
                 let tablaHTML = `
-                                                                                                                                                        <h3>Mis Proyectos Asociados</h3>
-                                                                                                                                                        <table class="tabla-proyectos" id="tabla-proyectos">
+                                                                                                                                                                            <h3>Mis Proyectos Asociados</h3>
+                                                                                                                                                                            <table class="tabla-proyectos" id="tabla-proyectos">
 <thead>
-                                                                                                                                        <tr>
-                                                                                                                                            <th onclick="ordenarTabla(0, this)">Estado <span class='flecha'></span></th>
-                                                                                                                                            <th onclick="ordenarTabla(1, this)">Código <span class='flecha'></span></th>
-                                                                                                                                            <th onclick="ordenarTabla(2, this)">Título <span class='flecha'></span></th>
-                                                                                                                                            <th onclick="ordenarTabla(3, this)">Convocatoria <span class='flecha'></span></th>
-                                                                                                                                            <th onclick="ordenarTabla(4, this)">Periodo <span class='flecha'></span></th>
-                                                                                                                                            <th onclick="ordenarTabla(5, this)">Presupuesto <span class='flecha'></span></th>
-                                                                                                                                            <th onclick="ordenarTabla(6, this)">Ejecución Presupuestaria</th>
-                                                                                                                                            <th onclick="ordenarTabla(7, this)">Informes Académicos <span class='flecha'></span></th>
-                                                                                                                                            <th>Acciones</th>
-                                                                                                                                        </tr>
+                                                                                                                                                            <tr>
+                                                                                                                                                                <th onclick="ordenarTabla(0, this)">Estado <span class='flecha'></span></th>
+                                                                                                                                                                <th onclick="ordenarTabla(1, this)">Código <span class='flecha'></span></th>
+                                                                                                                                                                <th onclick="ordenarTabla(2, this)">Título <span class='flecha'></span></th>
+                                                                                                                                                                <th onclick="ordenarTabla(3, this)">Convocatoria <span class='flecha'></span></th>
+                                                                                                                                                                <th onclick="ordenarTabla(4, this)">Periodo <span class='flecha'></span></th>
+                                                                                                                                                                <th onclick="ordenarTabla(5, this)">Presupuesto <span class='flecha'></span></th>
+                                                                                                                                                                <th onclick="ordenarTabla(6, this)">Ejecución Presupuestaria</th>
+                                                                                                                                                                <th onclick="ordenarTabla(7, this)">Informes Académicos <span class='flecha'></span></th>
+                                                                                                                                                                <th>Acciones</th>
+                                                                                                                                                            </tr>
 </thead>
-                                                                                                                                                            <tbody>
-                                                                                                                                                    `;
+                                                                                                                                                                                <tbody>
+                                                                                                                                                                        `;
 
                 for (const doc of querySnapshot.docs) {
                     const data = doc.data();
@@ -839,31 +839,31 @@
                         : "#f0ad4e"; // amarillo
 
                     const barraHTML = `
-                                                                                                                                                            <div style="width: 100%; background: #eee; height: 10px; border-radius: 5px;">
-                                                                                                                                                                <div style="width: ${porcentaje.toFixed(0)}%; height: 10px; background: ${barraColor}; border-radius: 5px;"></div>
-                                                                                                                                                            </div>
-                                                                                                                                                            <div><strong>${porcentaje.toFixed(0)}%</strong></div>
-                                                                                                                                                        `;
+                                                                                                                                                                                <div style="width: 100%; background: #eee; height: 10px; border-radius: 5px;">
+                                                                                                                                                                                    <div style="width: ${porcentaje.toFixed(0)}%; height: 10px; background: ${barraColor}; border-radius: 5px;"></div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div><strong>${porcentaje.toFixed(0)}%</strong></div>
+                                                                                                                                                                            `;
 
                     tablaHTML += `
-                                                                                                                                                            <tr>
-                                                                                                                                                                <td style="${estiloEstado}">${estado}</td>
-                                                                                                                                                                <td>${codigo}</td>
-                                                                                                                                                                <td>${data.titulo || "-"}</td>
-                                                                                                                                                                <td>${data.convocatoria || "-"}</td>
-                                                                                                                                                                <td>${data.periodo || "-"}</td>
-                                                                                                                                                                <td>${isNaN(presupuesto) ? "-" : `$${presupuesto.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
-                                                                                                                                                                <td>${barraHTML}</td>
-                                                                                                                                                                <td style="${estiloInformes}">${informes}</td>
-                                                                                                                                                                <td><button onclick="verProyecto('${idProyecto}')" style="padding: 6px 12px; font-size: 13px;">Ver</button></td>
-                                                                                                                                                            </tr>
-                                                                                                                                                        `;
+                                                                                                                                                                                <tr>
+                                                                                                                                                                                    <td style="${estiloEstado}">${estado}</td>
+                                                                                                                                                                                    <td>${codigo}</td>
+                                                                                                                                                                                    <td>${data.titulo || "-"}</td>
+                                                                                                                                                                                    <td>${data.convocatoria || "-"}</td>
+                                                                                                                                                                                    <td>${data.periodo || "-"}</td>
+                                                                                                                                                                                    <td>${isNaN(presupuesto) ? "-" : `$${presupuesto.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
+                                                                                                                                                                                    <td>${barraHTML}</td>
+                                                                                                                                                                                    <td style="${estiloInformes}">${informes}</td>
+                                                                                                                                                                                    <td><button onclick="verProyecto('${idProyecto}')" style="padding: 6px 12px; font-size: 13px;">Ver</button></td>
+                                                                                                                                                                                </tr>
+                                                                                                                                                                            `;
                 }
 
                 tablaHTML += `
-                                                                                                                                                            </tbody>
-                                                                                                                                                        </table>
-                                                                                                                                                    `;
+                                                                                                                                                                                </tbody>
+                                                                                                                                                                            </table>
+                                                                                                                                                                        `;
 
                 contenido.innerHTML = tablaHTML;
 
@@ -906,78 +906,78 @@
                 let botonesExtra = "";
                 if (estado.toUpperCase() === "EN EJECUCION") {
                     botonesExtra = `
-                                                                                                                                                                                                                    <div style="display: flex; gap: 150px; margin: 10px 0 30px auto; justify-content: flex-end;">
-                                                                                                                                                                                                                        <button onclick="abrirRendicionFinanciera('${projectId}')" class="btn-secundario">Rendición financiera</button>
-                                                                                                                                                                                                                        <button onclick="abrirInformesAcademicos('${projectId}')" class="btn-secundario">Informes Académicos</button>
-                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                `;
+                                                                                                                                                                                                                                        <div style="display: flex; gap: 150px; margin: 10px 0 30px auto; justify-content: flex-end;">
+                                                                                                                                                                                                                                            <button onclick="abrirRendicionFinanciera('${projectId}')" class="btn-secundario">Rendición financiera</button>
+                                                                                                                                                                                                                                            <button onclick="abrirInformesAcademicos('${projectId}')" class="btn-secundario">Informes Académicos</button>
+                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                    `;
                 }
 
                 contenido.innerHTML = `
-                                                                                                                                                                                                                <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
-                                                                                                                                                                                                                    <button onclick="volverAMisProyectos()" class="btn-volver">⬅ Volver</button>
-                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                    <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+                                                                                                                                                                                                                                        <button onclick="volverAMisProyectos()" class="btn-volver">⬅ Volver</button>
+                                                                                                                                                                                                                                    </div>
 
-                                                                                                                                                                                                                ${botonesExtra}
+                                                                                                                                                                                                                                    ${botonesExtra}
 
 <h3>Detalle del Proyecto</h3>
 
 <table class="tabla-ver-proyecto">
-                          <tr>
-                            <th>Estado</th>
-                            <td colspan="5" style="${estiloEstado}; font-weight: bold;">${estado}</td>
-                          </tr>
+                                              <tr>
+                                                <th>Estado</th>
+                                                <td colspan="5" style="${estiloEstado}; font-weight: bold;">${estado}</td>
+                                              </tr>
 
-                          <tr>
-                            <th>Título</th>
-                            <td colspan="2">${data.titulo || "-"}</td>
-                            <th>Titular</th>
-                            <td colspan="2">${data.titular || "-"}</td>
-                          </tr>
+                                              <tr>
+                                                <th>Título</th>
+                                                <td colspan="2">${data.titulo || "-"}</td>
+                                                <th>Titular</th>
+                                                <td colspan="2">${data.titular || "-"}</td>
+                                              </tr>
 
-                          <tr>
-                            <th>Resumen</th>
-                            <td colspan="5">${data.resumen || "-"}</td>
-                          </tr>
+                                              <tr>
+                                                <th>Resumen</th>
+                                                <td colspan="5">${data.resumen || "-"}</td>
+                                              </tr>
 
-                          <tr>
-                            <th>Código SIGEVA</th>
-                            <td>${data.Codigo || "-"}</td>
-                            <th>Convocatoria</th>
-                            <td>${data.convocatoria || "-"}</td>
-                            <th>Periodo</th>
-                            <td>${data.periodo || "-"}</td>
-                          </tr>
+                                              <tr>
+                                                <th>Código SIGEVA</th>
+                                                <td>${data.Codigo || "-"}</td>
+                                                <th>Convocatoria</th>
+                                                <td>${data.convocatoria || "-"}</td>
+                                                <th>Periodo</th>
+                                                <td>${data.periodo || "-"}</td>
+                                              </tr>
 
-                          <tr>
-                            <th>Financiamiento</th>
-                            <td>${data.nombre_externa || "-"}</td>
-                            <th>Tipo de proyecto</th>
-                            <td>${data.tipo_de_proyecto || "-"}</td>
-                            <th>Tipo de actividad</th>
-                            <td>${data.tipo_de_actividad || "-"}</td>
-                          </tr>
+                                              <tr>
+                                                <th>Financiamiento</th>
+                                                <td>${data.nombre_externa || "-"}</td>
+                                                <th>Tipo de proyecto</th>
+                                                <td>${data.tipo_de_proyecto || "-"}</td>
+                                                <th>Tipo de actividad</th>
+                                                <td>${data.tipo_de_actividad || "-"}</td>
+                                              </tr>
 
-                          <tr>
-                            <th>Área de conocimiento</th>
-                            <td colspan="2">${data.area_de_conocimiento || "-"}</td>
-                            <th>Disciplina</th>
-                            <td colspan="2">${data.disciplina || "-"}</td>
-                          </tr>
+                                              <tr>
+                                                <th>Área de conocimiento</th>
+                                                <td colspan="2">${data.area_de_conocimiento || "-"}</td>
+                                                <th>Disciplina</th>
+                                                <td colspan="2">${data.disciplina || "-"}</td>
+                                              </tr>
 
-                          <tr>
-                            <th>Objetivo socioeconómico</th>
-                            <td colspan="5">${data.objetivo_socioeconomico || "-"}</td>
-                          </tr>
+                                              <tr>
+                                                <th>Objetivo socioeconómico</th>
+                                                <td colspan="5">${data.objetivo_socioeconomico || "-"}</td>
+                                              </tr>
 
-                          <tr>
-                            <th>Resolución</th>
-                            <td colspan="2">${data.resolucion || "-"}</td>
-                            <th>Expediente</th>
-                            <td colspan="2">${data.expediente || "-"}</td>
-                          </tr>
+                                              <tr>
+                                                <th>Resolución</th>
+                                                <td colspan="2">${data.resolucion || "-"}</td>
+                                                <th>Expediente</th>
+                                                <td colspan="2">${data.expediente || "-"}</td>
+                                              </tr>
 </table>
-                                                                                                                                                                                                            `;
+                                                                                                                                                                                                                                `;
             } catch (error) {
                 console.error("Error al obtener el proyecto:", error);
                 contenido.innerHTML = "<p style='color: red;'>Error al obtener el proyecto.</p>";
@@ -1049,103 +1049,135 @@
                 const codigo = data.Codigo || "SIN CÓDIGO";
                 const presupuestoTotal = parseFloat(data.monto_total || 0);
 
-                contenido.innerHTML = `
-                                                                                                                                              <h3 style="margin-bottom: 25px;">Rendición financiera del proyecto <strong>${codigo}</strong></h3>
-                                                                                                                                              <form id="form-gasto" onsubmit="event.preventDefault(); agregarGasto(${presupuestoTotal}, '${codigo}');" style="display: flex; flex-direction: column; gap: 15px; max-width: 600px;">
-                                                                                                                                                <div>
-                                                                                                                                                  <label>Rubro:</label>
-                                                                                                                                                  <select id="rubro" required class="form-select" onchange="actualizarBotonesAdjuntos()">
-                                                                                                                                                    <option value="">Seleccione...</option>
-                                                                                                                                                    <option>Viajes y viáticos</option>
-                                                                                                                                                    <option>Equipamiento</option>
-                                                                                                                                                    <option>Licencia</option>
-                                                                                                                                                    <option>Bibliografía</option>
-                                                                                                                                                    <option>Bienes de consumo</option>
-                                                                                                                                                    <option>Difusión y/o protección de resultados</option>
-                                                                                                                                                    <option>Servicios de terceros</option>
-                                                                                                                                                  </select>
-                                                                                                                                                </div>
-                                                                                                                                                <div>
-                                                                                                                                                  <label>Concepto (máx. 40 caracteres):</label>
-                                                                                                                                                  <textarea id="concepto" maxlength="40" required rows="2" class="form-textarea"></textarea>
-                                                                                                                                                  <div id="contador-concepto" style="font-size: 12px; text-align: right; color: gray;">0 / 40</div>
-                                                                                                                                                </div>
-                                                                                                                                                <div>
-                                                                                                                                                  <label>Tipo de comprobante:</label>
-                                                                                                                                                  <select id="tipo-comprobante" required class="form-select" onchange="actualizarBotonesAdjuntos()">
-                                                                                                                                                    <option value="">Seleccione...</option>
-                                                                                                                                                    <option>Ticket fiscal</option>
-                                                                                                                                                    <option>Factura B o C</option>
-                                                                                                                                                    <option>Sube o taxi</option>
-                                                                                                                                                    <option>Moneda extranjera</option>
-                                                                                                                                                  </select>
-                                                                                                                                                </div>
-                                                                                                                                                <div>
-                                                                                                                                                  <label>CUIT del proveedor:</label>
-                                                                                                                                                  <input type="text" id="cuit" required pattern="\\d{11}" placeholder="Solo números (11)" class="form-input">
-                                                                                                                                                </div>
-                                                                                                                                                <div>
-                                                                                                                                                  <label>Nº de comprobante:</label>
-                                                                                                                                                  <input type="text" id="comprobante" required pattern="\\d{5}-\\d{8}" placeholder="Ej: 12345-56789012" class="form-input">
-                                                                                                                                                </div>
-                                                                                                                                                <div>
-                                                                                                                                                  <label>Fecha del comprobante:</label>
-                                                                                                                                                  <input type="date" id="fecha" required class="form-input">
-                                                                                                                                                </div>
-                                                                                                                                                <div id="div-monto-pesos">
-                                                                                                                                                  <label>Importe en pesos:</label>
-                                                                                                                                                  <input type="number" id="importe" required step="0.01" min="0" class="form-input" oninput="actualizarBotonesAdjuntos()">
-                                                                                                                                                </div>
-                                                                                                                                                <div id="div-monto-dolares" style="display:none;">
-                                                                                                                                                  <label>Importe en dólares:</label>
-                                                                                                                                                  <input type="number" id="monto-dolares" step="0.01" min="0" class="form-input">
-                                                                                                                                                </div>
-                                                                                                                                                <div id="div-tipo-cambio" style="display:none;">
-                                                                                                                                                  <label>Tipo de cambio (en pesos):</label>
-                                                                                                                                                  <input type="number" id="tipo-cambio" step="0.01" min="0" class="form-input">
-                                                                                                                                                </div>
-                                                                                                                                                <div id="adjuntos-container" style="margin-top: 20px;"></div>
-                                                                                                                                                <div style="text-align: right;">
-                                                                                                                                                  <button type="submit" class="form-button">Agregar gasto</button>
-                                                                                                                                                </div>
-                                                                                                                                              </form>
-                                                                                                                                              <div style="display: flex; gap: 20px; margin-top: 20px;">
-                                                                                                                                                <div id="presupuesto-info" class="info-box">Presupuesto total: <strong>$${presupuestoTotal.toLocaleString('es-AR')}</strong></div>
-                                                                                                                                                <div id="gastado-info" class="info-box">Total gastado: <strong>$0</strong></div>
-                                                                                                                                                <div id="ejecucion-info" class="info-box" style="flex:1">
-                                                                                                                                                  Ejecución: <strong>0%</strong>
-                                                                                                                                                  <div style="width: 100%; background: #eee; height: 10px; border-radius: 5px; margin-top: 4px;">
-                                                                                                                                                    <div id="barra-ejecucion" style="width: 0%; height: 10px; background: green; border-radius: 5px;"></div>
-                                                                                                                                                  </div>
-                                                                                                                                                </div>
-                                                                                                                                              </div>
-                                                                                                                                              <table class="tabla-proyectos" id="tabla-gastos" style="margin-top: 40px;">
-                                                                                                                                                <thead>
-                                                                                                                                                  <tr>
-                                                                                                                                                    <th>Rubro</th>
-                                                                                                                                                    <th>Concepto</th>
-                                                                                                                                                    <th>Tipo</th>
-                                                                                                                                                    <th>CUIT</th>
-                                                                                                                                                    <th>Comprobante</th>
-                                                                                                                                                    <th>Fecha</th>
-                                                                                                                                                    <th>Importe</th>
-                                                                                                                                                    <th>Adjuntos</th>
-                                                                                                                                                    <th>Acciones</th>
-                                                                                                                                                  </tr>
-                                                                                                                                                </thead>
-                                                                                                                                                <tbody></tbody>
-                                                                                                                                              </table>
-                                                                                                                                              <div style="margin-top: 30px; text-align: right;">
+                let enviada = false;
+                let fechaEnvio = null;
 
-                                                                                                                                      <button id="btn-enviar-rendicion" class="form-button" onclick="codigoProyectoActual='${codigo}'; presupuestoProyectoActual=${presupuestoTotal}; mostrarModalConfirmacion()">Enviar rendición</button>
+                try {
+                    const rendicionSnap = await firebase.firestore().collection("rendiciones").doc(codigo).get();
+                    if (rendicionSnap.exists) {
+                        const rendicionData = rendicionSnap.data();
+                        enviada = rendicionData.enviada || false;
+                        fechaEnvio = rendicionData.fecha_envio?.toDate().toLocaleDateString('es-AR') || null;
+                    }
+                } catch (error) {
+                    console.warn("No se pudo leer el estado de la rendición:", error);
+                }
+
+                contenido.innerHTML = `
+                                                                                                                                                                  <h3 style="margin-bottom: 25px;">Rendición financiera del proyecto <strong>${codigo}</strong></h3>
+                                                                                                                                                                  <form id="form-gasto" onsubmit="event.preventDefault(); agregarGasto(${presupuestoTotal}, '${codigo}');" style="display: flex; flex-direction: column; gap: 15px; max-width: 600px;">
+                                                                                                                                                                    <div>
+                                                                                                                                                                      <label>Rubro:</label>
+                                                                                                                                                                      <select id="rubro" required class="form-select" onchange="actualizarBotonesAdjuntos()">
+                                                                                                                                                                        <option value="">Seleccione...</option>
+                                                                                                                                                                        <option>Viajes y viáticos</option>
+                                                                                                                                                                        <option>Equipamiento</option>
+                                                                                                                                                                        <option>Licencia</option>
+                                                                                                                                                                        <option>Bibliografía</option>
+                                                                                                                                                                        <option>Bienes de consumo</option>
+                                                                                                                                                                        <option>Difusión y/o protección de resultados</option>
+                                                                                                                                                                        <option>Servicios de terceros</option>
+                                                                                                                                                                      </select>
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div>
+                                                                                                                                                                      <label>Concepto (máx. 40 caracteres):</label>
+                                                                                                                                                                      <textarea id="concepto" maxlength="40" required rows="2" class="form-textarea"></textarea>
+                                                                                                                                                                      <div id="contador-concepto" style="font-size: 12px; text-align: right; color: gray;">0 / 40</div>
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div>
+                                                                                                                                                                      <label>Tipo de comprobante:</label>
+                                                                                                                                                                      <select id="tipo-comprobante" required class="form-select" onchange="actualizarBotonesAdjuntos()">
+                                                                                                                                                                        <option value="">Seleccione...</option>
+                                                                                                                                                                        <option>Ticket fiscal</option>
+                                                                                                                                                                        <option>Factura B o C</option>
+                                                                                                                                                                        <option>Sube o taxi</option>
+                                                                                                                                                                        <option>Moneda extranjera</option>
+                                                                                                                                                                      </select>
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div>
+                                                                                                                                                                      <label>CUIT del proveedor:</label>
+                                                                                                                                                                      <input type="text" id="cuit" required pattern="\\d{11}" placeholder="Solo números (11)" class="form-input">
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div>
+                                                                                                                                                                      <label>Nº de comprobante:</label>
+                                                                                                                                                                      <input type="text" id="comprobante" required pattern="\\d{5}-\\d{8}" placeholder="Ej: 12345-56789012" class="form-input">
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div>
+                                                                                                                                                                      <label>Fecha del comprobante:</label>
+                                                                                                                                                                      <input type="date" id="fecha" required class="form-input">
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div id="div-monto-pesos">
+                                                                                                                                                                      <label>Importe en pesos:</label>
+                                                                                                                                                                      <input type="number" id="importe" required step="0.01" min="0" class="form-input" oninput="actualizarBotonesAdjuntos()">
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div id="div-monto-dolares" style="display:none;">
+                                                                                                                                                                      <label>Importe en dólares:</label>
+                                                                                                                                                                      <input type="number" id="monto-dolares" step="0.01" min="0" class="form-input">
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div id="div-tipo-cambio" style="display:none;">
+                                                                                                                                                                      <label>Tipo de cambio (en pesos):</label>
+                                                                                                                                                                      <input type="number" id="tipo-cambio" step="0.01" min="0" class="form-input">
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div id="adjuntos-container" style="margin-top: 20px;"></div>
+                                                                                                                                                                  <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button type="submit" class="form-button" id="btn-submit-gasto">Agregar gasto</button>
+                        <button type="button" class="form-button" id="btn-cancelar-edicion" style="background-color: gray; display: none;" onclick="cancelarEdicion()">Cancelar edición</button>
+</div>
+                                                                                                                                                                  </form>
+                                                                                                                                                                  <div style="display: flex; gap: 20px; margin-top: 20px;">
+                                                                                                                                                                    <div id="presupuesto-info" class="info-box">Presupuesto total: <strong>$${presupuestoTotal.toLocaleString('es-AR')}</strong></div>
+                                                                                                                                                                    <div id="gastado-info" class="info-box">Total gastado: <strong>$0</strong></div>
+                                                                                                                                                                    <div id="ejecucion-info" class="info-box" style="flex:1">
+                                                                                                                                                                      Ejecución: <strong>0%</strong>
+                                                                                                                                                                      <div style="width: 100%; background: #eee; height: 10px; border-radius: 5px; margin-top: 4px;">
+                                                                                                                                                                        <div id="barra-ejecucion" style="width: 0%; height: 10px; background: green; border-radius: 5px;"></div>
+                                                                                                                                                                      </div>
+                                                                                                                                                                    </div>
+                                                                                                                                                                  </div>
+                                                                                                                                                                  <table class="tabla-proyectos" id="tabla-gastos" style="margin-top: 40px;">
+                                                                                                                                                                    <thead>
+                                                                                                                                                                      <tr>
+                                                                                                                                                                        <th>Rubro</th>
+                                                                                                                                                                        <th>Concepto</th>
+                                                                                                                                                                        <th>Tipo</th>
+                                                                                                                                                                        <th>CUIT</th>
+                                                                                                                                                                        <th>Comprobante</th>
+                                                                                                                                                                        <th>Fecha</th>
+                                                                                                                                                                        <th>Importe</th>
+                                                                                                                                                                        <th>Adjuntos</th>
+                                                                                                                                                                        <th>Acciones</th>
+                                                                                                                                                                      </tr>
+                                                                                                                                                                    </thead>
+                                                                                                                                                                    <tbody></tbody>
+                                                                                                                                                                  </table>
+                                                                                                                                                                  <div style="margin-top: 30px; text-align: right;">
+
+                                                                                                                                                          <button id="btn-enviar-rendicion" class="form-button" onclick="codigoProyectoActual='${codigo}'; presupuestoProyectoActual=${presupuestoTotal}; mostrarModalConfirmacion()">Enviar rendición</button>
 </div>
 <div id="info-envio" style="margin-top: 15px; color: green; font-weight: bold;"></div>
-                                                                                                                                            `;
+                                                                                                                                                                `;
 
                 document.getElementById("concepto").addEventListener("input", () => {
                     const texto = document.getElementById("concepto").value.length;
                     document.getElementById("contador-concepto").textContent = `${texto} / 40`;
                 });
+                if (enviada) {
+                    document.getElementById("form-gasto").style.display = "none";
+                    document.getElementById("btn-enviar-rendicion").disabled = true;
+                    document.getElementById("info-envio").innerHTML = `
+                            Rendición enviada el ${fechaEnvio}.
+                            <button onclick="generarPDF('${codigo}', ${presupuestoTotal})" class="form-button" style="margin-left: 10px; padding: 4px 10px; font-size: 13px;">
+                                Descargar PDF nuevamente
+                            </button>
+                        `;
+
+                    // Limpia todas las celdas de acciones
+                    const filas = document.querySelectorAll("#tabla-gastos tbody tr");
+                    filas.forEach(fila => {
+                        const celdaAcciones = fila.querySelector("td:last-child");
+                        if (celdaAcciones) celdaAcciones.innerHTML = "";
+                    });
+                }
 
                 // Cargar los gastos guardados
                 try {
@@ -1169,18 +1201,20 @@
                         const fila = document.createElement("tr");
                         fila.setAttribute("data-id", doc.id);
                         fila.innerHTML = `
-                                                                                                                                                  <td>${gasto.rubro || ''}</td>
-                                                                                                                                                  <td>${gasto.concepto || ''}</td>
-                                                                                                                                                  <td>${gasto.tipo || ''}</td>
-                                                                                                                                                  <td>${gasto.cuit || ''}</td>
-                                                                                                                                                  <td>${gasto.comprobante || ''}</td>
-                                                                                                                                                  <td>${gasto.fecha || ''}</td>
-                                                                                                                                                  <td class="importe">$${Number(gasto.importe).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                                                                                                                                  <td>${archivosHtml}</td>
-                                                                                                                                                  <td style="text-align:center;">
-                                                                                                                                                    <span onclick="eliminarGasto('${codigo}', '${doc.id}', this, ${presupuestoTotal})" style="cursor:pointer; color:red;">✖</span>
-                                                                                                                                                  </td>
-                                                                                                                                                `;
+                        <td>${gasto.rubro || ''}</td>
+                        <td>${gasto.concepto || ''}</td>
+                        <td>${gasto.tipo || ''}</td>
+                        <td>${gasto.cuit || ''}</td>
+                        <td>${gasto.comprobante || ''}</td>
+                        <td>${gasto.fecha || ''}</td>
+                        <td class="importe">$${Number(gasto.importe).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td>${archivosHtml}</td>
+                        <td style="text-align:center;">
+                            <span onclick="editarGasto('${codigo}', '${doc.id}')" style="cursor:pointer; color:blue; margin-right: 8px;">✎</span>
+                            <span onclick="eliminarGasto('${codigo}', '${doc.id}', this, ${presupuestoTotal})" style="cursor:pointer; color:red;">✖</span>
+                        </td>
+`;
+
                         tbody.appendChild(fila);
                     });
 
@@ -1207,10 +1241,10 @@
         }
         function crearCampoArchivo(id, label) {
             return `
-                                                                                                                                                                                <div class="campo-archivo">
-                                                                                                                                                                                  <label>${label}</label>
-                                                                                                                                                                                  <input type="file" id="${id}" accept=".pdf" class="form-input" />
-                                                                                                                                                                                </div>`;
+                                                                                                                                                                                                    <div class="campo-archivo">
+                                                                                                                                                                                                      <label>${label}</label>
+                                                                                                                                                                                                      <input type="file" id="${id}" accept=".pdf" class="form-input" />
+                                                                                                                                                                                                    </div>`;
         }
 
         function actualizarBotonesAdjuntos() {
@@ -1349,18 +1383,19 @@
                 const fila = document.createElement("tr");
                 fila.setAttribute("data-id", nuevoGasto.id);
                 fila.innerHTML = `
-                                                                                                                                                    <td>${rubro}</td>
-                                                                                                                                                    <td>${concepto}</td>
-                                                                                                                                                    <td>${tipo}</td>
-                                                                                                                                                    <td>${(tipo === "Moneda extranjera" || tipo === "Sube o taxi") ? "-" : cuit}</td>
-                                                                                                                                                    <td>${(tipo === "Moneda extranjera" || tipo === "Sube o taxi") ? "-" : comprobante}</td>
-                                                                                                                                                    <td>${fecha}</td>
-                                                                                                                                                    <td class="importe">$${importeFinal.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                                                                                                                                    <td>${archivosHtml}</td>
-                                                                                                                                                    <td style="text-align:center;">
-                                                                                                                                                      <span onclick="eliminarGasto('${codigo}', '${nuevoGasto.id}', this, ${presupuestoTotal})" style="cursor:pointer; color:red;">✖</span>
-                                                                                                                                                    </td>
-                                                                                                                                                `;
+                                                                                                                                                                        <td>${rubro}</td>
+                                                                                                                                                                        <td>${concepto}</td>
+                                                                                                                                                                        <td>${tipo}</td>
+                                                                                                                                                                        <td>${(tipo === "Moneda extranjera" || tipo === "Sube o taxi") ? "-" : cuit}</td>
+                                                                                                                                                                        <td>${(tipo === "Moneda extranjera" || tipo === "Sube o taxi") ? "-" : comprobante}</td>
+                                                                                                                                                                        <td>${fecha}</td>
+                                                                                                                                                                        <td class="importe">$${importeFinal.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                                                                                                                                                        <td>${archivosHtml}</td>
+                                                                                                                                                                        <td style="text-align:center;">
+                                                                                                                                                                          <span onclick="editarGasto('${codigo}', '${nuevoGasto.id}')" style="cursor:pointer; color:blue; margin-right: 8px;">✎</span>
+<span onclick="eliminarGasto('${codigo}', '${nuevoGasto.id}', this, ${presupuestoTotal})" style="cursor:pointer; color:red;">✖</span>
+                                                                                                                                                                        </td>
+                                                                                                                                                                    `;
                 tbody.appendChild(fila);
 
                 document.getElementById("form-gasto").reset();
@@ -1376,6 +1411,19 @@
         }
 
         async function eliminarGasto(codigo, gastoId, boton, presupuestoTotal) {
+            // 🔐 Verificar si la rendición ya fue enviada
+            try {
+                const rendicionDoc = await firebase.firestore().collection("rendiciones").doc(codigo).get();
+                if (rendicionDoc.exists && rendicionDoc.data().enviada === true) {
+                    alert("La rendición ya fue enviada. No se pueden eliminar gastos.");
+                    return;
+                }
+            } catch (e) {
+                console.error("Error al verificar estado de la rendición:", e);
+                alert("Error al verificar el estado de la rendición. Intente nuevamente.");
+                return;
+            }
+
             if (!confirm("¿Estás seguro que querés eliminar este gasto?")) return;
 
             mostrarProcesando(true); // ⬅️ Mostrar cartel "Procesando..."
@@ -1410,7 +1458,180 @@
                 alert("No se pudo eliminar el gasto.");
             }
 
-            ocultarProcesando();; // ⬅️ Ocultar cartel "Procesando..."
+            ocultarProcesando(); // ⬅️ Ocultar cartel "Procesando..."
+        }
+
+        let idGastoEditando = null;
+
+        async function editarGasto(codigo, gastoId) {
+            try {
+                // 🔐 Verificar si la rendición ya fue enviada
+                const rendicionDoc = await firebase.firestore().collection("rendiciones").doc(codigo).get();
+                if (rendicionDoc.exists && rendicionDoc.data().enviada === true) {
+                    alert("La rendición ya fue enviada. No se pueden editar gastos.");
+                    return;
+                }
+
+                const docRef = firebase.firestore().collection("rendiciones").doc(codigo).collection("gastos").doc(gastoId);
+                const doc = await docRef.get();
+
+                if (!doc.exists) {
+                    alert("Gasto no encontrado.");
+                    return;
+                }
+
+                const gasto = doc.data();
+                idGastoEditando = gastoId;
+
+                document.getElementById("rubro").value = gasto.rubro || "";
+                document.getElementById("concepto").value = gasto.concepto || "";
+                document.getElementById("tipo-comprobante").value = gasto.tipo || "";
+                document.getElementById("fecha").value = gasto.fecha || "";
+
+                if (gasto.tipo === "Moneda extranjera") {
+                    const tipoCambio = parseFloat(gasto.tipo_cambio || "1") || 1;
+                    const montoDolares = gasto.importe / tipoCambio;
+                    document.getElementById("monto-dolares").value = montoDolares.toFixed(2);
+                    document.getElementById("tipo-cambio").value = tipoCambio;
+                } else {
+                    document.getElementById("importe").value = gasto.importe || "";
+                }
+
+                if (gasto.tipo !== "Moneda extranjera" && gasto.tipo !== "Sube o taxi") {
+                    document.getElementById("cuit").value = gasto.cuit || "";
+                    document.getElementById("comprobante").value = gasto.comprobante || "";
+                }
+
+                actualizarBotonesAdjuntos();
+
+                // Cambiar texto y función del botón
+                const form = document.getElementById("form-gasto");
+                const boton = form.querySelector("button[type='submit']");
+                boton.textContent = "Actualizar gasto";
+                form.onsubmit = function (e) {
+                    e.preventDefault();
+                    actualizarGasto(codigo, idGastoEditando);
+                };
+
+                document.getElementById("btn-cancelar-edicion").style.display = "inline-block";
+                window.scrollTo({ top: form.offsetTop - 80, behavior: 'smooth' });
+
+            } catch (error) {
+                console.error("Error al editar gasto:", error);
+                alert("Error al cargar el gasto para edición.");
+            }
+        }
+        function cancelarEdicion() {
+            const form = document.getElementById("form-gasto");
+            form.reset();
+            document.getElementById("adjuntos-container").innerHTML = "";
+            document.getElementById("contador-concepto").textContent = "0 / 40";
+            document.getElementById("btn-submit-gasto").textContent = "Agregar gasto";
+            document.getElementById("btn-cancelar-edicion").style.display = "none";
+
+            form.onsubmit = function (e) {
+                e.preventDefault();
+                agregarGasto(presupuestoProyectoActual, codigoProyectoActual);
+            };
+        }
+        async function actualizarGasto(codigo, gastoId) {
+            const rubro = document.getElementById("rubro").value;
+            const concepto = document.getElementById("concepto").value;
+            const tipo = document.getElementById("tipo-comprobante").value;
+            const fecha = document.getElementById("fecha").value;
+
+            const cuit = document.getElementById("cuit").value;
+            const comprobante = document.getElementById("comprobante").value;
+
+            const importePesos = parseFloat(document.getElementById("importe")?.value || "NaN");
+            const montoDolares = parseFloat(document.getElementById("monto-dolares")?.value || "NaN");
+            const tipoCambio = parseFloat(document.getElementById("tipo-cambio")?.value || "NaN");
+
+            let importeFinal;
+            if (tipo === "Moneda extranjera") {
+                if (!rubro || !concepto || !tipo || !fecha || isNaN(montoDolares) || isNaN(tipoCambio)) {
+                    alert("Completá todos los campos requeridos.");
+                    return;
+                }
+                importeFinal = montoDolares * tipoCambio;
+            } else if (tipo === "Sube o taxi") {
+                if (!rubro || !concepto || !tipo || !fecha || isNaN(importePesos)) {
+                    alert("Completá todos los campos requeridos.");
+                    return;
+                }
+                importeFinal = importePesos;
+            } else {
+                if (!rubro || !concepto || !tipo || !cuit || !comprobante || !fecha || isNaN(importePesos)) {
+                    alert("Completá todos los campos requeridos.");
+                    return;
+                }
+                importeFinal = importePesos;
+            }
+
+            mostrarProcesando(true);
+
+            try {
+                const docRef = firebase.firestore().collection("rendiciones").doc(codigo).collection("gastos").doc(gastoId);
+                const docSnap = await docRef.get();
+
+                if (!docSnap.exists) {
+                    alert("Gasto no encontrado.");
+                    ocultarProcesando();
+                    return;
+                }
+
+                const gastoActual = docSnap.data();
+                const archivosAntiguos = gastoActual.archivos || {};
+                const archivosActualizados = {};
+
+                const inputsFile = document.querySelectorAll('#adjuntos-container input[type="file"]');
+
+                for (const input of inputsFile) {
+                    const nombreCampo = input.previousElementSibling.textContent;
+
+                    if (input.files.length > 0) {
+                        if (archivosAntiguos[nombreCampo]) {
+                            const urlAntiguo = archivosAntiguos[nombreCampo];
+                            const path = decodeURIComponent(new URL(urlAntiguo).pathname.split("/o/")[1]).split("?")[0];
+                            try {
+                                await firebase.storage().ref().child(path).delete();
+                            } catch (e) {
+                                console.warn(`No se pudo eliminar el archivo anterior "${nombreCampo}":`, e);
+                            }
+                        }
+
+                        const file = input.files[0];
+                        const fileName = `${Date.now()}_${file.name}`;
+                        const ref = firebase.storage().ref().child(`gastos/${codigo}/${fileName}`);
+                        await ref.put(file);
+                        const url = await ref.getDownloadURL();
+                        archivosActualizados[nombreCampo] = url;
+                    } else if (archivosAntiguos[nombreCampo]) {
+                        archivosActualizados[nombreCampo] = archivosAntiguos[nombreCampo];
+                    }
+                }
+
+                await docRef.update({
+                    rubro,
+                    concepto,
+                    tipo,
+                    cuit: (tipo === "Moneda extranjera" || tipo === "Sube o taxi") ? "" : cuit,
+                    comprobante: (tipo === "Moneda extranjera" || tipo === "Sube o taxi") ? "" : comprobante,
+                    fecha,
+                    importe: importeFinal,
+                    archivos: archivosActualizados
+                });
+
+                alert("Gasto actualizado correctamente.");
+                cancelarEdicion();
+                abrirRendicionFinanciera(codigo);
+
+            } catch (error) {
+                console.error("Error al actualizar gasto:", error);
+                alert("Ocurrió un error al guardar el gasto.");
+            }
+
+            ocultarProcesando();
         }
 
         function actualizarTotales(presupuestoTotal) {
@@ -1467,10 +1688,10 @@
                 document.querySelectorAll("#tabla-gastos .importe").forEach(td => td.parentElement.querySelector("span").remove());
                 document.getElementById("btn-enviar-rendicion").disabled = true;
                 document.getElementById("info-envio").innerHTML = `
-                                                                                                              Rendición enviada el ${fechaEnvio}.
-                                                                                                              <button onclick="generarPDF('${codigo}', ${presupuestoTotal})" class="form-button" style="margin-left: 10px; padding: 4px 10px; font-size: 13px;">
-                                                                                                                Descargar PDF nuevamente
-                                                                                                              </button>
+                                                                                                                                  Rendición enviada el ${fechaEnvio}.
+                                                                                                                                  <button onclick="generarPDF('${codigo}', ${presupuestoTotal})" class="form-button" style="margin-left: 10px; padding: 4px 10px; font-size: 13px;">
+                                                                                                                                    Descargar PDF nuevamente
+                                                                                                                                  </button>
 `;
 
                 await generarPDF(codigo, presupuestoTotal);
@@ -1570,12 +1791,12 @@
             }
 
             contenedor.innerHTML = `
-                                                                                    <h2 style="margin-bottom: 20px;">Informe académico del proyecto <strong>${codigo}</strong></h2>
-                                                                                    <div style="display: flex; gap: 20px;">
-                                                                                      <button onclick="abrirInformeParcial('${codigo}')" class="form-button">Informe Parcial</button>
-                                                                                      <button onclick="abrirInformeFinal('${codigo}')" class="form-button">Informe Final</button>
-                                                                                    </div>
-                                                                                  `;
+                                                                                                        <h2 style="margin-bottom: 20px;">Informe académico del proyecto <strong>${codigo}</strong></h2>
+                                                                                                        <div style="display: flex; gap: 20px;">
+                                                                                                          <button onclick="abrirInformeParcial('${codigo}')" class="form-button">Informe Parcial</button>
+                                                                                                          <button onclick="abrirInformeFinal('${codigo}')" class="form-button">Informe Final</button>
+                                                                                                        </div>
+                                                                                                      `;
         }
     </script>
     <script>
@@ -1586,55 +1807,55 @@
             mostrarCargando();
 
             contenedor.innerHTML = `
-                                                          <h2 style="margin-bottom: 20px;">Informe Parcial del Proyecto <strong>${codigo}</strong></h2>
+                                                                              <h2 style="margin-bottom: 20px;">Informe Parcial del Proyecto <strong>${codigo}</strong></h2>
 
-                                                          <div style="display: flex; flex-direction: column; gap: 30px; max-width: 700px;">
+                                                                              <div style="display: flex; flex-direction: column; gap: 30px; max-width: 700px;">
 
-                                                            <div>
-                                                              <p><strong>Avances de resultados y actividades del proyecto en relación con el plan de trabajo inicial:</strong></p>
-                                                              <textarea id="campo1" maxlength="3000" required oninput="actualizarContador('campo1')" style="width: 100%; height: 120px; padding: 8px;"></textarea>
-                                                              <div id="contador-campo1" style="font-size: 12px; color: gray; text-align: right;">0 / 3000</div>
-                                                            </div>
+                                                                                <div>
+                                                                                  <p><strong>Avances de resultados y actividades del proyecto en relación con el plan de trabajo inicial:</strong></p>
+                                                                                  <textarea id="campo1" maxlength="3000" required oninput="actualizarContador('campo1')" style="width: 100%; height: 120px; padding: 8px;"></textarea>
+                                                                                  <div id="contador-campo1" style="font-size: 12px; color: gray; text-align: right;">0 / 3000</div>
+                                                                                </div>
 
-                                                            <div>
-                                                              <p><strong>Problemas y dificultades encontradas, reformulaciones o precisiones en relación al proyecto presentado:</strong></p>
-                                                              <textarea id="campo2" maxlength="3000" required oninput="actualizarContador('campo2')" style="width: 100%; height: 120px; padding: 8px;"></textarea>
-                                                              <div id="contador-campo2" style="font-size: 12px; color: gray; text-align: right;">0 / 3000</div>
-                                                            </div>
+                                                                                <div>
+                                                                                  <p><strong>Problemas y dificultades encontradas, reformulaciones o precisiones en relación al proyecto presentado:</strong></p>
+                                                                                  <textarea id="campo2" maxlength="3000" required oninput="actualizarContador('campo2')" style="width: 100%; height: 120px; padding: 8px;"></textarea>
+                                                                                  <div id="contador-campo2" style="font-size: 12px; color: gray; text-align: right;">0 / 3000</div>
+                                                                                </div>
 
-                                                            <div>
-                                                              <p><strong>Comentarios o sugerencias:</strong></p>
-                                                              <textarea id="campo3" maxlength="3000" oninput="actualizarContador('campo3')" style="width: 100%; height: 120px; padding: 8px;"></textarea>
-                                                              <div id="contador-campo3" style="font-size: 12px; color: gray; text-align: right;">0 / 3000</div>
-                                                            </div>
+                                                                                <div>
+                                                                                  <p><strong>Comentarios o sugerencias:</strong></p>
+                                                                                  <textarea id="campo3" maxlength="3000" oninput="actualizarContador('campo3')" style="width: 100%; height: 120px; padding: 8px;"></textarea>
+                                                                                  <div id="contador-campo3" style="font-size: 12px; color: gray; text-align: right;">0 / 3000</div>
+                                                                                </div>
 
-                                                            <div id="info-envio-parcial" style="margin-top: 5px; color: green; font-weight: bold;"></div>
+                                                                                <div id="info-envio-parcial" style="margin-top: 5px; color: green; font-weight: bold;"></div>
 
-                                                            <div style="display: flex; gap: 20px; margin-top: 10px;">
-                                                              <button id="btn-guardar-informe" class="form-button" onclick="guardarInformeParcial('${codigo}')">Guardar</button>
-                                                              <button id="btn-enviar-informe" class="form-button" onclick="mostrarModalConfirmacionParcial()">Enviar informe parcial</button>
-                                                            </div>
-                                                          </div>
+                                                                                <div style="display: flex; gap: 20px; margin-top: 10px;">
+                                                                                  <button id="btn-guardar-informe" class="form-button" onclick="guardarInformeParcial('${codigo}')">Guardar</button>
+                                                                                  <button id="btn-enviar-informe" class="form-button" onclick="mostrarModalConfirmacionParcial()">Enviar informe parcial</button>
+                                                                                </div>
+                                                                              </div>
 
-                                                          <div id="modal-confirmacion-parcial" style="
-                                                            display: none;
-                                                            position: fixed;
-                                                            top: 0; left: 0;
-                                                            width: 100%; height: 100%;
-                                                            background: rgba(255, 255, 255, 0.8);
-                                                            z-index: 9999;
-                                                            justify-content: center;
-                                                            align-items: center;
-                                                            font-size: 18px;
-                                                            font-weight: bold;
-                                                            color: #333;
-                                                          ">
-                                                            <div style="background: white; padding: 20px; border: 1px solid #ccc; text-align: center;">
-                                                              ¿Está seguro de que desea enviar el informe parcial? Luego no podrá realizar cambios.<br><br>
-                                                              <button onclick="confirmarEnvioInformeParcial('${codigo}')">Sí</button>
-                                                              <button onclick="cerrarModalConfirmacionParcial()">No</button>
-                                                            </div>
-                                                          </div>
+                                                                              <div id="modal-confirmacion-parcial" style="
+                                                                                display: none;
+                                                                                position: fixed;
+                                                                                top: 0; left: 0;
+                                                                                width: 100%; height: 100%;
+                                                                                background: rgba(255, 255, 255, 0.8);
+                                                                                z-index: 9999;
+                                                                                justify-content: center;
+                                                                                align-items: center;
+                                                                                font-size: 18px;
+                                                                                font-weight: bold;
+                                                                                color: #333;
+                                                                              ">
+                                                                                <div style="background: white; padding: 20px; border: 1px solid #ccc; text-align: center;">
+                                                                                  ¿Está seguro de que desea enviar el informe parcial? Luego no podrá realizar cambios.<br><br>
+                                                                                  <button onclick="confirmarEnvioInformeParcial('${codigo}')">Sí</button>
+                                                                                  <button onclick="cerrarModalConfirmacionParcial()">No</button>
+                                                                                </div>
+                                                                              </div>
 `;
 
             setTimeout(() => {
@@ -1745,62 +1966,166 @@
             mostrarCargando();
 
             contenedor.innerHTML = `
-                                                        <!-- Botón volver arriba a la derecha -->
-                                                        <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
-                                                            <button onclick="volverAMisProyectos()" class="btn-volver">⬅ Volver</button>
-                                                        </div>
+          <!-- Botón volver arriba a la derecha -->
+          <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+            <button onclick="volverAMisProyectos()" class="btn-volver">⬅ Volver</button>
+          </div>
 
-                                                        <h2 style="margin-bottom: 20px;">Informe Final del Proyecto <strong>${codigo}</strong></h2>
+          <h2 style="margin-bottom: 20px;">Informe Final del Proyecto <strong>${codigo}</strong></h2>
 
-                                                        <!-- Botones de pestañas (alineados horizontalmente) -->
-                                                        <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: nowrap;">
-                                                            <button class="tablink active" onclick="mostrarPestaniaFinal(event, 'cuestionario')">Cuestionario</button>
-                                                            <button class="tablink" onclick="mostrarPestaniaFinal(event, 'formacion')">Formación de RRHH</button>
-                                                            <button class="tablink" onclick="mostrarPestaniaFinal(event, 'produccion')">Producción científica</button>
-                                                        </div>
+          <!-- Botones de pestañas -->
+          <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: nowrap;">
+            <button class="tablink active" onclick="mostrarPestaniaFinal(event, 'cuestionario')">Cuestionario</button>
+            <button class="tablink" onclick="mostrarPestaniaFinal(event, 'formacion')">Formación de RRHH</button>
+            <button class="tablink" onclick="mostrarPestaniaFinal(event, 'produccion')">Producción científica</button>
+          </div>
 
-                                                        <!-- Contenido de cada pestaña -->
-<div id="tab-cuestionario" class="tabcontent-final">
-                                    <div id="contenido-pestanas-final"></div>
+          <!-- Pestaña Cuestionario -->
+          <div id="tab-cuestionario" class="tabcontent-final">
+            <div id="contenido-pestanas-final"></div>
+          </div>
+
+          <!-- Pestaña Formación de RRHH -->
+          <div id="tab-formacion" class="tabcontent-final" style="display:none;">
+            <form id="form-rrhh" onsubmit="event.preventDefault(); agregarRRHH();" style="max-width: 600px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+              <div><label>Nombre:</label><input type="text" id="rrhh-nombre" required class="form-input"></div>
+              <div><label>Apellido:</label><input type="text" id="rrhh-apellido" required class="form-input"></div>
+              <div><label>CUIT:</label><input type="text" id="rrhh-cuit" required placeholder="11 dígitos" class="form-input" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+              <div><label>Tipo de formación:</label>
+                <select id="rrhh-tipo" required class="form-select">
+                  <option value="">Seleccione...</option>
+                  <option>Posdoctorado</option><option>Tesis doctoral</option><option>Tesis de maestría</option>
+                  <option>Trabajo final de maestría</option><option>Trabajo final integrador de especialización</option>
+                  <option>Tesina de grado</option><option>Trabajo final de grado</option><option>Práctica profesional</option>
+                  <option>Créditos para carrera de grado</option><option>Participación en actividades de investigación</option>
+                </select>
+              </div>
+              <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="submit" class="form-button" id="btn-agregar-rrhh">Agregar RRHH</button>
+                <button type="button" class="form-button" style="background-color: gray; display:none;" id="btn-cancelar-edicion-rrhh" onclick="cancelarEdicionRRHH()">Cancelar edición</button>
+              </div>
+            </form>
+
+            <table class="tabla-proyectos" id="tabla-rrhh">
+              <thead>
+                <tr><th>Nombre</th><th>Apellido</th><th>CUIT</th><th>Tipo</th><th>Acciones</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Pestaña Producción científica -->
+          <div id="tab-produccion" class="tabcontent-final" style="display:none;">
+            <div id="form-produccion" style="margin-bottom: 20px;">
+              <label>Tipo de producción:</label>
+              <select id="tipo-produccion" onchange="mostrarCamposProduccion()" class="form-select">
+                <option value="">Seleccione...</option>
+                <option>Artículos publicados en revistas</option>
+                <option>Libros</option>
+                <option>Partes de libros</option>
+                <option>Trabajos en eventos científico-tecnológicos publicados</option>
+                <option>Tesis e Informes técnicos</option>
+                <option>Demás tipos de producción C-T publicada</option>
+              </select>
+
+<div id="campos-articulo" style="display:none; margin-top: 15px;">
+
+<div style="display: flex; gap: 30px; margin-bottom: 20px; flex-wrap: wrap;">
+
+      <!-- Buscar por DOI -->
+      <div style="flex: 1; min-width: 220px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span onclick="mostrarInfoDOI()" style="cursor: pointer; font-size: 18px;" title="¿Qué es esto?">ℹ️</span>
+          <label for="doi-articulo" style="margin: 0;"><strong>Buscar por DOI:</strong></label>
+        </div>
+        <input type="text" id="doi-articulo" class="form-input" placeholder="Ej: 10.1234/abcd.56789" style="width: 100%; margin-bottom: 6px;">
+        <button type="button" onclick="buscarPorDOI()" style="width: 100%;">Buscar DOI</button>
+      </div>
+
+      <!-- Buscar por ISSN -->
+      <div style="flex: 1; min-width: 220px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <span onclick="mostrarInfoISSN()" style="cursor: pointer; font-size: 18px;" title="¿Qué es esto?">ℹ️</span>
+          <label for="issn-articulo" style="margin: 0;"><strong>Buscar por ISSN:</strong></label>
+        </div>
+        <input type="text" id="issn-articulo" class="form-input" placeholder="Ej: 1234-5678" style="width: 100%; margin-bottom: 6px;">
+        <button type="button" onclick="buscarPorISSN()" style="width: 100%;">Buscar ISSN</button>
+      </div>
 </div>
 
-                                                        <div id="tab-formacion" class="tabcontent-final" style="display:none;">
-                                                            <p>(Aquí irá la formación de RRHH)</p>
-                                                        </div>
+          <!-- Campos principales -->
+          <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+            <div>
+              <label>Título:</label>
+              <input type="text" id="titulo-articulo" class="form-input">
+            </div>
+            <div>
+              <label>Autores:</label>
+              <input type="text" id="autores-articulo" class="form-input">
+            </div>
+          </div>
 
-                                                        <div id="tab-produccion" class="tabcontent-final" style="display:none;">
-                                                            <p>(Aquí irá la producción científica)</p>
-                                                        </div>
+          <!-- Campos secundarios -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
+            <div>
+              <label>Revista:</label>
+              <input type="text" id="revista-articulo" class="form-input">
+            </div>
+            <div>
+              <label>Editorial:</label>
+              <input type="text" id="editorial-articulo" class="form-input">
+            </div>
+<div>
+          <label>ISSN:</label>
+          <input type="text" id="issn-articulo" class="form-input" readonly>
+</div>
+            <div>
+              <label>Año:</label>
+              <input type="text" id="anio-articulo" class="form-input">
+            </div>
+            <div>
+              <label>Volumen:</label>
+              <input type="text" id="volumen-articulo" class="form-input">
+            </div>
+            <div>
+              <label>Número:</label>
+              <input type="text" id="numero-articulo" class="form-input">
+            </div>
+            <div>
+              <label>Páginas:</label>
+              <input type="text" id="paginas-articulo" class="form-input">
+            </div>
+            <div style="grid-column: span 2;">
+              <label>URL del artículo:</label>
+              <input type="text" id="url-articulo" class="form-input">
+            </div>
+          </div>
 
-                                                        <!-- Área de botones comunes -->
-                                                        <div style="display: flex; gap: 20px; margin-top: 25px;">
-                                                            <button id="btn-guardar-informe-final" class="form-button" onclick="guardarInformeFinal('${codigo}')">Guardar</button>
-                                                            <button id="btn-enviar-informe-final" class="form-button" onclick="mostrarModalConfirmacionFinal()">Enviar informe final</button>
-                                                        </div>
+</div>
 
-                                                        <!-- Modal de confirmación -->
-                                                        <div id="modal-confirmacion-final" style="
-                                                            display: none;
-                                                            position: fixed;
-                                                            top: 0; left: 0;
-                                                            width: 100%; height: 100%;
-                                                            background: rgba(255, 255, 255, 0.8);
-                                                            z-index: 9999;
-                                                            justify-content: center;
-                                                            align-items: center;
-                                                            font-size: 18px;
-                                                            font-weight: bold;
-                                                            color: #333;
-                                                        ">
-                                                            <div style="background: white; padding: 20px; border: 1px solid #ccc; text-align: center;">
-                                                                ¿Está seguro de que desea enviar el informe final? Luego no podrá realizar cambios.<br><br>
-                                                                <button onclick="confirmarEnvioInformeFinal('${codigo}')">Sí</button>
-                                                                <button onclick="cerrarModalConfirmacionFinal()">No</button>
-                                                            </div>
-                                                        </div>
-                                                    `;
+
+          <!-- Área de botones comunes -->
+          <div style="display: flex; gap: 20px; margin-top: 25px;">
+            <button id="btn-guardar-informe-final" class="form-button" onclick="guardarInformeFinal('${codigo}')">Guardar</button>
+            <button id="btn-enviar-informe-final" class="form-button" onclick="mostrarModalConfirmacionFinal()">Enviar informe final</button>
+          </div>
+
+          <!-- Modal de confirmación -->
+          <div id="modal-confirmacion-final" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; color: #333;">
+            <div style="background: white; padding: 20px; border: 1px solid #ccc; text-align: center;">
+              ¿Está seguro de que desea enviar el informe final? Luego no podrá realizar cambios.<br><br>
+              <button onclick="confirmarEnvioInformeFinal('${codigo}')">Sí</button>
+              <button onclick="cerrarModalConfirmacionFinal()">No</button>
+            </div>
+          </div>
+`;
+
+
+
+
 
             mostrarPestanaCuestionarioFinal(codigo);
+            cargarRRHHFinal(codigo);
             ocultarCargando();
         }
     </script>
@@ -1836,52 +2161,52 @@
             if (!contenedor) return;
 
             contenedor.innerHTML = `
-                                    <div style="display: flex; flex-direction: column; gap: 25px; max-width: 800px;">
-                                        <div>
-                                            <label for="final-descripcion"><strong>DESCRIPCIÓN FINAL DEL PROYECTO</strong></label>
-                                            <div style="font-size: 13px; margin-bottom: 6px;">
-                                                Realice una exposición sintética de la labor desarrollada durante la ejecución del proyecto.
-                                            </div>
-                                            <textarea id="final-descripcion" maxlength="3200" required oninput="actualizarContadorFinal(this)" style="width: 100%; height: 120px; padding: 8px;"></textarea>
-                                              <div class="contador" id="contador-final-descripcion">0 / 3200</div>
-                                        </div>
+                                                        <div style="display: flex; flex-direction: column; gap: 25px; max-width: 800px;">
+                                                            <div>
+                                                                <label for="final-descripcion"><strong>DESCRIPCIÓN FINAL DEL PROYECTO</strong></label>
+                                                                <div style="font-size: 13px; margin-bottom: 6px;">
+                                                                    Realice una exposición sintética de la labor desarrollada durante la ejecución del proyecto.
+                                                                </div>
+                                                                <textarea id="final-descripcion" maxlength="3200" required oninput="actualizarContadorFinal(this)" style="width: 100%; height: 120px; padding: 8px;"></textarea>
+                                                                  <div class="contador" id="contador-final-descripcion">0 / 3200</div>
+                                                            </div>
 
-                                        <div>
-                                            <label for="final-obstaculos"><strong>OBSTÁCULOS Y DIFICULTADES</strong></label>
-                                            <div style="font-size: 13px; margin-bottom: 6px;">
-                                                Indique los obstáculos, dificultades, reformulaciones o precisiones realizadas en relación al proyecto presentado.
-                                            </div>
-                                            <textarea id="final-obstaculos" maxlength="3200" required oninput="actualizarContadorFinal(this)" style="width: 100%; height: 120px; padding: 8px;"></textarea>
-                                            <div class="contador" id="contador-final-obstaculos">0 / 3200</div>
-                                        </div>
+                                                            <div>
+                                                                <label for="final-obstaculos"><strong>OBSTÁCULOS Y DIFICULTADES</strong></label>
+                                                                <div style="font-size: 13px; margin-bottom: 6px;">
+                                                                    Indique los obstáculos, dificultades, reformulaciones o precisiones realizadas en relación al proyecto presentado.
+                                                                </div>
+                                                                <textarea id="final-obstaculos" maxlength="3200" required oninput="actualizarContadorFinal(this)" style="width: 100%; height: 120px; padding: 8px;"></textarea>
+                                                                <div class="contador" id="contador-final-obstaculos">0 / 3200</div>
+                                                            </div>
 
-                                        <div>
-                                            <label for="final-productos"><strong>PRODUCTOS, RESULTADOS Y PRINCIPALES ACTIVIDADES</strong></label>
-                                            <div style="font-size: 13px; margin-bottom: 6px;">
-                                                Describa los productos, resultados y principales actividades al cierre del proyecto.
-                                            </div>
-                                            <textarea id="final-productos" maxlength="3200" required oninput="actualizarContadorFinal(this)" style="width: 100%; height: 120px; padding: 8px;"></textarea>
-                                            <div class="contador" id="contador-final-productos">0 / 3200</div>
-                                        </div>
+                                                            <div>
+                                                                <label for="final-productos"><strong>PRODUCTOS, RESULTADOS Y PRINCIPALES ACTIVIDADES</strong></label>
+                                                                <div style="font-size: 13px; margin-bottom: 6px;">
+                                                                    Describa los productos, resultados y principales actividades al cierre del proyecto.
+                                                                </div>
+                                                                <textarea id="final-productos" maxlength="3200" required oninput="actualizarContadorFinal(this)" style="width: 100%; height: 120px; padding: 8px;"></textarea>
+                                                                <div class="contador" id="contador-final-productos">0 / 3200</div>
+                                                            </div>
 
-                                        <div>
-                                            <label for="final-comentarios"><strong>OTROS COMENTARIOS</strong></label>
-                                            <div style="font-size: 13px; margin-bottom: 6px;">
-                                                Espacio libre para comentarios.
-                                            </div>
-                                            <textarea id="final-comentarios" maxlength="3200" oninput="actualizarContadorFinal(this)" style="width: 100%; height: 120px; padding: 8px;"></textarea>
-                                            <div class="contador" id="contador-final-comentarios">0 / 3200</div>
-                                        </div>
+                                                            <div>
+                                                                <label for="final-comentarios"><strong>OTROS COMENTARIOS</strong></label>
+                                                                <div style="font-size: 13px; margin-bottom: 6px;">
+                                                                    Espacio libre para comentarios.
+                                                                </div>
+                                                                <textarea id="final-comentarios" maxlength="3200" oninput="actualizarContadorFinal(this)" style="width: 100%; height: 120px; padding: 8px;"></textarea>
+                                                                <div class="contador" id="contador-final-comentarios">0 / 3200</div>
+                                                            </div>
 
-                                        <div>
-                                            <label for="final-material-pdf"><strong>INFORMACIÓN PROBATORIA</strong></label>
-                                            <div style="font-size: 13px; margin-bottom: 6px;">
-                                                Adjunte en un único PDF todo el material probatorio.
-                                            </div>
-                                            <input type="file" accept="application/pdf" id="final-material-pdf" />
-                                            <div id="archivo-cargado-final" style="font-size: 13px; margin-top: 6px;"></div>
-                                        </div>
-                                    </div>
+                                                            <div>
+                                                                <label for="final-material-pdf"><strong>INFORMACIÓN PROBATORIA</strong></label>
+                                                                <div style="font-size: 13px; margin-bottom: 6px;">
+                                                                    Adjunte en un único PDF todo el material probatorio.
+                                                                </div>
+                                                                <input type="file" accept="application/pdf" id="final-material-pdf" />
+                                                                <div id="archivo-cargado-final" style="font-size: 13px; margin-top: 6px;"></div>
+                                                            </div>
+                                                        </div>
 `;
 
             cargarCuestionarioFinal(codigo);
@@ -1948,8 +2273,8 @@
 
                     if (data.urlArchivo) {
                         document.getElementById("archivo-cargado-final").innerHTML = `
-                                            Archivo cargado: <a href="${data.urlArchivo}" target="_blank">Ver PDF</a>
-                                        `;
+                                                                Archivo cargado: <a href="${data.urlArchivo}" target="_blank">Ver PDF</a>
+                                                            `;
                     }
 
                     // 🚫 Si ya fue enviado, deshabilitar campos y botones
@@ -1978,13 +2303,138 @@
                 console.error("Error al cargar cuestionario final:", error);
             }
         }
+        async function cargarRRHHFinal(codigo) {
+            try {
+                const snapshot = await firebase.firestore()
+                    .collection("informes_finales")
+                    .doc(codigo)
+                    .collection("rrhh")
+                    .get();
+
+                const tbody = document.querySelector("#tabla-rrhh tbody");
+                tbody.innerHTML = "";
+
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const fila = document.createElement("tr");
+                    fila.setAttribute("data-id", doc.id);
+                    fila.innerHTML = generarFilaRRHHHTML(data.nombre, data.apellido, data.cuit, data.tipo, doc.id, codigo);
+                    tbody.appendChild(fila);
+                });
+
+                const docProyecto = await firebase.firestore().collection("informes_finales").doc(codigo).get();
+                if (docProyecto.exists && docProyecto.data().enviado === true) {
+                    document.querySelectorAll('#form-rrhh input, #form-rrhh select, #form-rrhh button').forEach(el => el.disabled = true);
+                }
+
+            } catch (error) {
+                console.error("Error al cargar RRHH:", error);
+            }
+        }
     </script>
+    <script>
+        let idRRHHEditando = null;
+
+        function agregarRRHH() {
+            const nombre = document.getElementById("rrhh-nombre").value.trim();
+            const apellido = document.getElementById("rrhh-apellido").value.trim();
+            const cuit = document.getElementById("rrhh-cuit").value.trim();
+            const tipo = document.getElementById("rrhh-tipo").value;
+
+            if (!/^\d{11}$/.test(cuit)) {
+                alert("El CUIT debe tener exactamente 11 dígitos.");
+                return;
+            }
+
+            const tbody = document.querySelector("#tabla-rrhh tbody");
+
+            if (idRRHHEditando) {
+                // Actualizar fila existente
+                const fila = document.querySelector(`tr[data-id='${idRRHHEditando}']`);
+                fila.innerHTML = generarFilaRRHHHTML(nombre, apellido, cuit, tipo, idRRHHEditando);
+                idRRHHEditando = null;
+                document.getElementById("btn-agregar-rrhh").textContent = "Agregar RRHH";
+                document.getElementById("btn-cancelar-edicion-rrhh").style.display = "none";
+            } else {
+                // Generar ID temporal único
+                const id = "rrhh_" + Date.now();
+                const fila = document.createElement("tr");
+                fila.setAttribute("data-id", id);
+                fila.innerHTML = generarFilaRRHHHTML(nombre, apellido, cuit, tipo, id);
+                tbody.appendChild(fila);
+            }
+
+            // Limpiar formulario
+            document.getElementById("form-rrhh").reset();
+        }
+
+        function generarFilaRRHHHTML(nombre, apellido, cuit, tipo, id, codigo) {
+            return `
+                <td>${nombre}</td>
+                <td>${apellido}</td>
+                <td>${cuit}</td>
+                <td>${tipo}</td>
+                <td style="text-align:center;">
+                    <span onclick="editarRRHH('${id}')" style="cursor:pointer; color:blue; margin-right: 8px;">✎</span>
+                    <span onclick="eliminarRRHH('${codigo}', '${id}')" style="cursor:pointer; color:red;">✖</span>
+                </td>
+            `;
+        }
+
+        function editarRRHH(id) {
+            const fila = document.querySelector(`tr[data-id='${id}']`);
+            if (!fila) return;
+
+            const celdas = fila.querySelectorAll("td");
+            document.getElementById("rrhh-nombre").value = celdas[0].textContent;
+            document.getElementById("rrhh-apellido").value = celdas[1].textContent;
+            document.getElementById("rrhh-cuit").value = celdas[2].textContent;
+            document.getElementById("rrhh-tipo").value = celdas[3].textContent;
+
+            idRRHHEditando = id;
+            document.getElementById("btn-agregar-rrhh").textContent = "Actualizar RRHH";
+            document.getElementById("btn-cancelar-edicion-rrhh").style.display = "inline-block";
+        }
+
+        async function eliminarRRHH(codigo, id) {
+            const fila = document.querySelector(`tr[data-id='${id}']`);
+            if (!fila || !confirm("¿Estás seguro que querés eliminar este registro?")) return;
+
+            fila.remove();
+
+            if (!id.startsWith("rrhh_")) {
+                try {
+                    await firebase.firestore()
+                        .collection("informes_finales")
+                        .doc(codigo)
+                        .collection("rrhh")
+                        .doc(id)
+                        .delete();
+                } catch (error) {
+                    console.error("Error al eliminar de Firebase:", error);
+                    alert("No se pudo eliminar de la base de datos.");
+                }
+            }
+
+            if (idRRHHEditando === id) cancelarEdicionRRHH();
+        }
+
+        function cancelarEdicionRRHH() {
+            idRRHHEditando = null;
+            document.getElementById("form-rrhh").reset();
+            document.getElementById("btn-agregar-rrhh").textContent = "Agregar RRHH";
+            document.getElementById("btn-cancelar-edicion-rrhh").style.display = "none";
+        }
+    </script>
+
+
     <script>
         async function guardarInformeFinal(codigo) {
             mostrarCargando();
 
             try {
                 await guardarCuestionarioFinal(codigo);
+                await guardarFormacionRRHH(codigo);  // ⬅️ Nueva línea
                 mostrarMensajeVerde("Informe final guardado correctamente.");
             } catch (error) {
                 console.error("Error al guardar informe final:", error);
@@ -2028,6 +2478,7 @@
 
             try {
                 await guardarCuestionarioFinal(codigo); // Asegurarse de guardar antes de marcar como enviado
+                await guardarFormacionRRHH(codigo);
 
                 const fechaEnvio = new Date().toISOString();
 
@@ -2044,6 +2495,225 @@
             } finally {
                 ocultarCargando();
             }
+        }
+    </script>
+    <script>
+        async function guardarFormacionRRHH(codigo) {
+            const filas = document.querySelectorAll("#tabla-rrhh tbody tr");
+
+            const rrhhRef = firebase.firestore()
+                .collection("informes_finales")
+                .doc(codigo)
+                .collection("rrhh");
+
+            // Eliminar todos los documentos previos
+            const snapshot = await rrhhRef.get();
+            const batch = firebase.firestore().batch();
+            snapshot.forEach(doc => batch.delete(doc.ref));
+            await batch.commit();
+
+            // Agregar los actuales
+            for (const fila of filas) {
+                const nombre = fila.cells[0].textContent.trim();
+                const apellido = fila.cells[1].textContent.trim();
+                const cuit = fila.cells[2].textContent.trim();
+                const tipo = fila.cells[3].textContent.trim();
+
+                await rrhhRef.add({
+                    nombre,
+                    apellido,
+                    cuit,
+                    tipo
+                });
+            }
+        }
+    </script>
+    <script>
+        function mostrarCamposProduccion() {
+            const tipo = document.getElementById("tipo-produccion").value;
+            const esArticulo = tipo === "Artículos publicados en revistas";
+            document.getElementById("campos-articulo").style.display = esArticulo ? "block" : "none";
+        }
+
+        async function buscarPorDOI() {
+            const doi = document.getElementById("doi-articulo").value.trim();
+            if (!doi) return alert("Ingrese un DOI válido.");
+
+            try {
+                const res = await fetch(`https://api.crossref.org/works/${encodeURIComponent(doi)}`);
+                const data = await res.json();
+                const info = data.message;
+
+                document.getElementById("titulo-articulo").value = info.title?.[0] || "";
+                document.getElementById("autores-articulo").value = info.author?.map(a => `${a.given} ${a.family}`).join(", ") || "";
+                document.getElementById("revista-articulo").value = info["container-title"]?.[0] || "";
+                document.getElementById("anio-articulo").value = info.issued?.["date-parts"]?.[0]?.[0] || "";
+                document.getElementById("volumen-articulo").value = info.volume || "";
+                document.getElementById("numero-articulo").value = info.issue || "";
+                document.getElementById("paginas-articulo").value = info.page || "";
+                document.getElementById("url-articulo").value = info.URL || "";
+
+                // Nuevo: ISSN y Editorial
+                document.getElementById("issn-articulo").value = info.ISSN?.[0] || "";
+                document.getElementById("editorial-articulo").value = info.publisher || "";
+
+            } catch (err) {
+                console.error("Error al consultar Crossref:", err);
+                alert("No se pudo obtener información del DOI.");
+            }
+        }
+        async function buscarPorISSN() {
+            const issn = document.getElementById("input-issn").value.trim();
+            if (!issn) return alert("Ingrese un ISSN válido.");
+
+            try {
+                const res = await fetch(`https://api.openalex.org/sources?filter=issn:${encodeURIComponent(issn)}`);
+                const data = await res.json();
+
+                if (!data.results || data.results.length === 0) {
+                    alert("No se encontraron resultados para ese ISSN.");
+                    return;
+                }
+
+                const info = data.results[0];
+
+                // Completar campos
+                document.getElementById("revista-articulo").value = info.display_name || "";
+                document.getElementById("editorial-articulo").value = info.host_organization_name || "";
+                document.getElementById("issn-articulo").value = info.issn_l || "";
+
+            } catch (err) {
+                console.error("Error al consultar OpenAlex:", err);
+                alert("No se pudo obtener información del ISSN.");
+            }
+        }
+
+
+        async function buscarPorISBN() {
+            const isbn = document.getElementById("isbn-articulo").value.trim().replace(/-/g, "");
+            if (!isbn) return alert("Ingrese un ISBN válido.");
+
+            try {
+                const res = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`);
+                const data = await res.json();
+                const info = data[`ISBN:${isbn}`];
+
+                if (!info) return alert("No se encontró información para ese ISBN.");
+
+                document.getElementById("titulo-articulo").value = info.title || "";
+                document.getElementById("editorial-articulo").value = info.publishers?.[0]?.name || "";
+                document.getElementById("revista-articulo").value = info.publish_places?.[0]?.name || "";
+
+            } catch (err) {
+                console.error("Error al consultar Open Library:", err);
+                alert("No se pudo obtener información del ISBN.");
+            }
+        }
+        function mostrarInfoDOI() {
+            document.getElementById("modal-info-doi").style.display = "block";
+        }
+
+        function cerrarModalInfoDOI() {
+            document.getElementById("modal-info-doi").style.display = "none";
+        }
+
+        function mostrarInfoISSN() {
+            document.getElementById("modal-info-issn").style.display = "block";
+        }
+
+        function cerrarModalInfoISSN() {
+            document.getElementById("modal-info-issn").style.display = "none";
+        }
+        let producciones = [];
+        let idProduccionEditando = null;
+
+        function agregarProduccion() {
+            const tipo = document.getElementById("tipo-produccion").value;
+            const titulo = document.getElementById("titulo-articulo").value;
+            const autores = document.getElementById("autores-articulo").value;
+            const revista = document.getElementById("revista-articulo").value;
+            const anio = document.getElementById("anio-articulo").value;
+
+            const produccion = {
+                tipo, titulo, autores, revista, anio,
+                volumen: document.getElementById("volumen-articulo").value,
+                numero: document.getElementById("numero-articulo").value,
+                paginas: document.getElementById("paginas-articulo").value,
+                url: document.getElementById("url-articulo").value,
+                doi: document.getElementById("doi-articulo").value,
+                id: idProduccionEditando || Date.now().toString()
+            };
+
+            if (idProduccionEditando) {
+                producciones = producciones.map(p => p.id === idProduccionEditando ? produccion : p);
+                idProduccionEditando = null;
+            } else {
+                producciones.push(produccion);
+            }
+
+            limpiarFormularioProduccion();
+            renderizarTablaProduccion();
+        }
+
+        function renderizarTablaProduccion() {
+            const tbody = document.getElementById("tbody-produccion");
+            tbody.innerHTML = "";
+
+            producciones.forEach(prod => {
+                const fila = document.createElement("tr");
+                fila.setAttribute("data-id", prod.id);
+                fila.innerHTML = `
+                    <td>${prod.tipo}</td>
+                    <td>${prod.titulo}</td>
+                    <td>${prod.autores}</td>
+                    <td>${prod.revista}</td>
+                    <td>${prod.anio}</td>
+                    <td style="text-align:center;">
+                        <span onclick="editarProduccion('${prod.id}')" style="cursor:pointer; color:blue; margin-right: 8px;">✎</span>
+                        <span onclick="eliminarProduccion('${prod.id}')" style="cursor:pointer; color:red;">✖</span>
+                    </td>
+                `;
+                tbody.appendChild(fila);
+            });
+        }
+
+        function limpiarFormularioProduccion() {
+            document.getElementById("tipo-produccion").value = "";
+            document.getElementById("doi-articulo").value = "";
+            document.getElementById("titulo-articulo").value = "";
+            document.getElementById("autores-articulo").value = "";
+            document.getElementById("revista-articulo").value = "";
+            document.getElementById("anio-articulo").value = "";
+            document.getElementById("volumen-articulo").value = "";
+            document.getElementById("numero-articulo").value = "";
+            document.getElementById("paginas-articulo").value = "";
+            document.getElementById("url-articulo").value = "";
+            document.getElementById("campos-articulo").style.display = "none";
+        }
+
+        function editarProduccion(id) {
+            const prod = producciones.find(p => p.id === id);
+            if (!prod) return;
+
+            idProduccionEditando = id;
+            document.getElementById("tipo-produccion").value = prod.tipo;
+            mostrarCamposProduccion();
+
+            document.getElementById("doi-articulo").value = prod.doi || "";
+            document.getElementById("titulo-articulo").value = prod.titulo || "";
+            document.getElementById("autores-articulo").value = prod.autores || "";
+            document.getElementById("revista-articulo").value = prod.revista || "";
+            document.getElementById("anio-articulo").value = prod.anio || "";
+            document.getElementById("volumen-articulo").value = prod.volumen || "";
+            document.getElementById("numero-articulo").value = prod.numero || "";
+            document.getElementById("paginas-articulo").value = prod.paginas || "";
+            document.getElementById("url-articulo").value = prod.url || "";
+        }
+
+        function eliminarProduccion(id) {
+            if (!confirm("¿Deseás eliminar esta producción?")) return;
+            producciones = producciones.filter(p => p.id !== id);
+            renderizarTablaProduccion();
         }
     </script>
     <script>
@@ -2106,5 +2776,18 @@
             }
         }
     </script>
+    <!-- Modal para información DOI -->
+    <div id="modal-info-doi" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:white; padding:20px; border:1px solid #ccc; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index:1000;">
+        <h3>¿Qué es el DOI y qué usamos?</h3>
+        <p>El sistema <strong>SIAP-UNTREF</strong> utiliza <strong>Crossref</strong> para consultar automáticamente los datos del artículo ingresando su DOI (Digital Object Identifier). Esta base internacional garantiza resultados confiables para artículos científicos registrados.</p>
+        <button onclick="cerrarModalInfoDOI()">Cerrar</button>
+    </div>
+
+    <!-- Modal para información ISSN -->
+    <div id="modal-info-issn" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); background:white; padding:20px; border:1px solid #ccc; border-radius:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index:1000;">
+        <h3>¿Qué es el ISSN y qué usamos?</h3>
+        <p>El sistema <strong>SIAP-UNTREF</strong> utiliza <strong>OpenAlex</strong> para consultar datos sobre revistas científicas a partir del ISSN (International Standard Serial Number). Esto permite completar automáticamente campos como nombre de la revista y editorial.</p>
+        <button onclick="cerrarModalInfoISSN()">Cerrar</button>
+    </div>
 </body>
 </html >
